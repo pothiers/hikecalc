@@ -1,0 +1,70 @@
+# "trail" format
+#
+# Line starts with NUMBER or WAYPOINT
+# NUMBER:: distance from previous WAYPOINT
+# WAYPOINT:: Unique name (per file). First char is alpha
+# 
+# Each seperated by white space.  
+# Two adjacent WAYPOINTS means break in trail. 
+#
+# Nameing conventions:
+#   TE:: Trail End (opposite of TS)
+#   TS:: Trail Start (opposite of TE); like TH, but less so.
+#   TH:: Trail Head; as given by map where available, else logical start
+#        If you had to walk to get here, its a "TS". 
+#   *Pass, *Cyn, *Spring, *Pools, *Saddle
+#
+#
+
+FingerRockTH 0.7 PontatocJct  1.8 PontatocRidgeTE
+PontatocJct  3.0 PontatocCynTE
+FingerRockTH 1.1 FingerRockSpring 3.5 FR1 .5 MtKimbleJct 1.5 PimaSpring
+5.7 PimaCynTH 
+FR1 2.0 VentanaRidge 2.8 MaidenPools 2.6 VentanaTH
+VentanaRidge 1.2 TheWindow 2.0 CathedralJct .9 BridalVeilFalls 1.3
+GeronimoMeadow 1.2 CardiacGap 2.4 RattlesnakeJct .5 SabinoRoad1 .5
+SabinoTH
+
+CathedralJct 1.1 Cathedral_route 1.9 
+WestForkTE 3.4 HutchsPool 1.6 
+BoxCampTE 2.6 SabinoCynTS 3.7 SabinoTH  # via road; other possibilities
+
+
+SabinoTH .8 PhonelineTH .9 BearCynTH 2.2 SevenFalls 1.2 BearCynSwim
+2.7 Bear4720 .5 PrisonSaddle 1.0 EastForkTE
+
+PhonelineTH .6 BlackettsTS 1.7 BlackettsTE
+
+BlackettsTS .4 Connector1Top 2.4 Connector2Top .8 PhonelineTE .5
+SabinoRoadTop 3.7 SabinoTH
+
+MolinoTH 0.6
+PrisonCampTH .1 pcJct 1.7 SycamoreReservoir .6 shortcutToBear .6 Bear4720
+PrisonCampTH 0.0 GordonHirabayashiTH						# "alias"
+
+BoxCampTH 1.8 BoxSpringTS 3.0 ApacheSpring 2.3 BoxCampTE 
+
+RomeroTH 1.1 MontrosePools 1.7 RomeroPools 4.4 RomeroPass 1.8 WestForkTE
+
+BridalVeilFalls  .9 CathedralRockTS 1.1 CathedralSaddle 1.9 WestForkTE
+CathedralSaddle .9 CathedralPeak
+
+Connector2Top .6 Connector2Bot
+
+MarshallGulchTH 1.2 MarshallSaddle 1.7 LemmonLookoutBot .8
+LemmonPoolJct 1.5 LemmonTrail@WildernessOfRocks
+LemmonPoolJct .3 LemmonPools
+
+PalisadesTH 3.1 MudSpring 4.0 PalisadesBot 
+EastForkTE 1.0 PalisadesBot  1.1 BoxCampTE
+
+# fragments
+Connector2Bot 0.2 SabinoBathroomTop 0.6 SabinoCynSwim1 0.2 SabinoRoadTop
+SabinoCyn@EspereroTr 0.6 SabinoCyn@RattlesnakeCyn 
+SabinoTH 0.5 SabinoCyn@RattlesnakeCyn 
+
+# Top of lemmon
+MtLemmonTH .4 LemmonLookoutTop 2.0 LemmonLookoutBot
+MtLemmonTH .8 j5 .7 Tr6Jct 2.5  LemmonTrail@WildernessOfRocks 1.9 RomeroPass
+
+

@@ -1,0 +1,5 @@
+./hike_calc.py table ../data/catalina-distance-list.txt > foo.csv
+echo "Wrote foo.csv"
+
+./hike_calc.py shortest -t MolinoTH  -t BearCynTH ../data/catalina-distance-list.txt
+
