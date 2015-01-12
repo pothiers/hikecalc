@@ -30,8 +30,8 @@ WestForkTE 3.4 HutchsPool 1.6
 BoxCampTE 2.6 SabinoCynTS 3.7 SabinoTH  # via road; other possibilities
 
 
-SabinoTH .8 PhonelineTH .9 BearCynTH 2.2 SevenFalls 1.2 BearCynSwim
-2.7 Bear4720 .5 PrisonSaddle 1.0 EastForkTE
+SabinoTH .8 PhonelineTH .9 BearCynTH 2.2 SevenFalls 3.9
+Bear4720 .5 PrisonSaddle 1.0 EastForkTE
 
 PhonelineTH .6 BlackettsTS 1.7 BlackettsTE
 

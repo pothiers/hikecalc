@@ -466,18 +466,32 @@ def genTable(hiker, args):
     
 
 def infoShortest(hiker, args):
-    logging.debug('infoShortest using THs ({}): '.format(args.trailhead))
-    total, running = graphDistance(hiker.graph, args.trailhead, explain=True)
+    logging.debug('infoShortest using THs ({}): '.format(args.waypoints))
+
+    missing = set(args.waypoints) - set(hiker.graph.nodes())
+    if 0 != len(missing):
+        print('The waypoints: {} are not in the data-set.'.format(missing))
+        infoWaypoints(hiker)
+        sys.exit(1)
+    total, running = graphDistance(hiker.graph, args.waypoints, explain=True)
+    if args.cummulative:
+        details = '\n  '.join(['{:>5.1f}  {}'.format(cdist,wp)
+                               for (wp, d1, cdist, d2) in running])
+    else:
+        details = ', '.join([wp for (wp,segdist, cumdist, lname) in running])
     print('Shortest distance from "{}" to "{}" is {:.1f} miles via:\n  {}'
           .format(
               running[0][0],
               running[-1][0],
               total,
-              ', '.join([wp for (wp,segdist, cumdist, lname) in running])
+              details
           ))
                 
 def infoTrailheads(hiker, args):
     print('Trail-heads: {}'.format(', '.join(hiker.trailheads)))
+
+def infoWaypoints(hiker):
+    print('Waypoints: {}'.format(', '.join(hiker.graph.nodes())))
     
 ##############################################################################
 
@@ -519,10 +533,12 @@ def main():
     
     pars_s = subparsers.add_parser('shortest',
                                    help='Find shortest route')
-    pars_s.add_argument('-t', '--trailhead', 
+    pars_s.add_argument('-w', '--waypoints', 
                         action='append',
-                        help='List of trailheds to consider. (multi allowed)',
-    )
+                        help='List of waypoints to consider. (multi allowed)')
+    pars_s.add_argument('--cummulative', 
+                        action='store_true',
+                        help='List cummulative distance)')
     pars_s.set_defaults(func=infoShortest)
 
 

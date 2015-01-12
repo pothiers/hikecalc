@@ -1,4 +1,8 @@
-# Rincon mths (much of it in Saguaro National Park)
+# Rincon mtns (much of it in Saguaro National Park)
+#
+# mostly from: Rincon Mountains, Az, 6th edition, 1994
+# Published by: Rainbow Expeditions
+#
 
 DouglasSpringTH 0.3 DesertTank 2.0 AquilaCorral 3.6 DouglasSpringCamp
 2.4 CowHeadSaddle 3.3 HelensDome 0.2 FireLoopJct 0.4 ManningCamp 0.1
