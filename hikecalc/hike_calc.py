@@ -449,7 +449,7 @@ def tt_1():
            %(wps_str,
              h.distance(wps_str.split(','), explain=True))))
 
-def genTable(hiker):
+def genTable(hiker, args):
     #!h = Hiker()
     #!h.loadPaths(dist_data_file)
     #!h.appendTrailHeadsByPattern()
@@ -465,42 +465,71 @@ def genTable(hiker):
    #!          h.distance(wps_str.split(','), explain=True))))
     
 
+def infoShortest(hiker, args):
+    logging.debug('infoShortest using THs ({}): '.format(args.trailhead))
+    total, running = graphDistance(hiker.graph, args.trailhead, explain=True)
+    print('Shortest distance from "{}" to "{}" is {:.1f} miles via:\n  {}'
+          .format(
+              running[0][0],
+              running[-1][0],
+              total,
+              ', '.join([wp for (wp,segdist, cumdist, lname) in running])
+          ))
+                
+def infoTrailheads(hiker, args):
+    print('Trail-heads: {}'.format(', '.join(hiker.trailheads)))
+    
 ##############################################################################
 
 
 def main():
     #!print('EXECUTING: {}\n\n'.format(' '.join(sys.argv)))
-    parser = argparse.ArgumentParser(
-        description='My shiny new python program',
-        epilog='EXAMPLE: %(prog)s a b"'
-        )
-    parser.add_argument('cmd',  help='Command',
-                        choices = [
-                            'table',
-                            'trailheads',
-                            'shortest', # bewteen THs
-                            ])
-    parser.add_argument('infile',  help='Input file',
-                        type=argparse.FileType('r') )
-    #!parser.add_argument('outfile', help='Output output',
-    #!                    type=argparse.FileType('w') )
+    #!description='My shiny new python program',
+    #!epilog='EXAMPLE: %(prog)s a b"'
 
-    parser.add_argument('-t', '--trailhead', '--TH',
-                        action='append',
-                        help='List of trailheds to consider. (multi allowed)',
-                        )
+    parser = argparse.ArgumentParser('hc')
+    subparsers = parser.add_subparsers(title='subcommands',
+                                       help='sub-command help')
+
     parser.add_argument('--loglevel',      help='Kind of diagnostic output',
                         choices = ['CRTICAL', 'ERROR', 'WARNING',
                                    'INFO', 'DEBUG'],
                         default='WARNING',
                         )
+    parser.add_argument('infile',  help='Input file',
+                        type=argparse.FileType('r') )
+
+
+    pars_t = subparsers.add_parser('table',
+                help=('Output table of distances. '
+                      'Distance between every pair of waypoints that are '
+                      'connected by a path of 1 or more segments.'
+                  ))
+    pars_t.add_argument('-f', '--format',
+                        choices = ['csv', 'txt'],
+                        default='csv',
+                        help='Output format',
+                        )
+    pars_t.set_defaults(func=genTable)
+
+
+    pars_h = subparsers.add_parser('th',
+                                   help='Output all trail-heads')
+    pars_h.set_defaults(func=infoTrailheads)
+    
+    pars_s = subparsers.add_parser('shortest',
+                                   help='Find shortest route')
+    pars_s.add_argument('-t', '--trailhead', 
+                        action='append',
+                        help='List of trailheds to consider. (multi allowed)',
+    )
+    pars_s.set_defaults(func=infoShortest)
+
+
     args = parser.parse_args()
-    #!args.outfile.close()
-    #!args.outfile = args.outfile.name
 
-    #!print 'My args=',args
-    #!print 'infile=',args.infile
 
+    ########################################
     log_level = getattr(logging, args.loglevel.upper(), None)
     if not isinstance(log_level, int):
         parser.error('Invalid log level: %s' % args.loglevel) 
@@ -509,29 +538,17 @@ def main():
                         datefmt='%m-%d %H:%M'
                         )
     logging.debug('Debug output is enabled!!!')
+    logging.debug('args={}'.format(args))
+    ########################################
 
+    hiker = Hiker()
+    hiker.loadPaths(args.infile)
+    hiker.appendTrailHeadsByPattern()
 
-    h = Hiker()
-    h.loadPaths(args.infile)
-    h.appendTrailHeadsByPattern()
-
-    if args.cmd == 'table':
-        genTable(h)
-    elif args.cmd == 'trailheads':
-        print('Trailheads: {}'.format(', '.join(h.trailheads)))
-    elif args.cmd == 'shortest':
-        logging.debug('cmd={} using THs ({}): '
-                      .format(args.cmd, args.trailhead))
-        total, running = graphDistance(h.graph, args.trailhead, explain=True)
-        print('Shortest distance from "{}" to "{}" is {:.1f} miles via:\n  {}'
-              .format(
-                  running[0][0],
-                  running[-1][0],
-                  total,
-                  ', '.join([wp for (wp,segdist, cumdist, lname) in running])
-              ))
-                
-        #!print('total={}\nrunning={}'.format(total,running))
+    args.func(hiker, args)
+    
+    #!elif args.cmd == 'trailheads':
+    #!    print('Trailheads: {}'.format(', '.join(h.trailheads)))
     
 
 if __name__ == '__main__':

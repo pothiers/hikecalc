@@ -1,5 +1,9 @@
-./hike_calc.py table ../data/catalina-distance-list.txt > foo.csv
+data=../data/catalina-distance-list.txt
+
+./hike_calc.py th $data
+
+./hike_calc.py table $data > foo.csv
 echo "Wrote foo.csv"
 
-./hike_calc.py shortest -t MolinoTH  -t BearCynTH ../data/catalina-distance-list.txt
+./hike_calc.py shortest -t MolinoTH -t BearCynTH $data 
 
