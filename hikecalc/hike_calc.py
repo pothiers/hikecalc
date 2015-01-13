@@ -145,6 +145,7 @@ def graphDistance(graph,  waypoints, explain=False):
             running.append((path[idx+1], segdist, cum, lname))
             logging.debug('{} miles: {} to {}'
                           .format(segdist, path[idx], path[idx+1]))
+    # running :: [(wp, segDist, cumDist, longName), ...]
     return total,running
 
 
@@ -471,17 +472,18 @@ def infoShortest(hiker, args):
     missing = set(args.waypoints) - set(hiker.graph.nodes())
     if 0 != len(missing):
         print('The waypoints: {} are not in the data-set.'.format(missing))
-        infoWaypoints(hiker)
+        infoWaypoints(hiker, args)
         sys.exit(1)
     total, running = graphDistance(hiker.graph, args.waypoints, explain=True)
-    if args.cummulative:
-        details = '\n  '.join(['{:>5.1f}  {}'.format(cdist,wp)
-                               for (wp, d1, cdist, d2) in running])
+    if args.details:
+        details = '\n  '.join(['{:>5.1f} {:>5.1f}  {}'
+                               .format(sdist, cdist, wp)
+                               for (wp, sdist, cdist, lname) in running])
     else:
         details = ', '.join([wp for (wp,segdist, cumdist, lname) in running])
-    print('Shortest distance from "{}" to "{}" is {:.1f} miles via:\n  {}'
+    print('The shortest distance from "{}" to "{}" is {:.1f} miles via:\n  {}'
           .format(
-              running[0][0],
+              args.waypoints[0],
               running[-1][0],
               total,
               details
@@ -490,7 +492,7 @@ def infoShortest(hiker, args):
 def infoTrailheads(hiker, args):
     print('Trail-heads: {}'.format(', '.join(hiker.trailheads)))
 
-def infoWaypoints(hiker):
+def infoWaypoints(hiker, args):
     print('Waypoints: {}'.format(', '.join(hiker.graph.nodes())))
     
 ##############################################################################
@@ -530,13 +532,17 @@ def main():
     pars_h = subparsers.add_parser('th',
                                    help='Output all trail-heads')
     pars_h.set_defaults(func=infoTrailheads)
-    
+
+    pars_w = subparsers.add_parser('wp',
+                                   help='Output all waypoints')
+    pars_w.set_defaults(func=infoWaypoints)
+
     pars_s = subparsers.add_parser('shortest',
                                    help='Find shortest route')
     pars_s.add_argument('-w', '--waypoints', 
                         action='append',
                         help='List of waypoints to consider. (multi allowed)')
-    pars_s.add_argument('--cummulative', 
+    pars_s.add_argument('--details', 
                         action='store_true',
                         help='List cummulative distance)')
     pars_s.set_defaults(func=infoShortest)

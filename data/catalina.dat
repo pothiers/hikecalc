@@ -58,6 +58,11 @@ LemmonPoolJct .3 LemmonPools
 PalisadesTH 3.1 MudSpring 4.0 PalisadesBot 
 EastForkTE 1.0 PalisadesBot  1.1 BoxCampTE
 
+PalisadesRangerTH 0.5 PalRangJct 2.0 NovioSpring 1.8
+CrystalSprTop 1.4 ButterflyTH
+
+CrystalSprTop 3.6 CrystalSprBot
+
 # fragments
 Connector2Bot 0.2 SabinoBathroomTop 0.6 SabinoCynSwim1 0.2 SabinoRoadTop
 SabinoCyn@EspereroTr 0.6 SabinoCyn@RattlesnakeCyn 
