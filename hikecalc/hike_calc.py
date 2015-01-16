@@ -490,10 +490,10 @@ def infoShortest(hiker, args):
           ))
                 
 def infoTrailheads(hiker, args):
-    print('Trail-heads: {}'.format(', '.join(hiker.trailheads)))
+    print('Trail-heads:\n  {}'.format('\n  '.join(hiker.trailheads)))
 
 def infoWaypoints(hiker, args):
-    print('Waypoints: {}'.format(', '.join(hiker.graph.nodes())))
+    print('Waypoints:\n  {}'.format('\n  '.join(hiker.graph.nodes())))
     
 ##############################################################################
 

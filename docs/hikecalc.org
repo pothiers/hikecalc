@@ -1,5 +1,9 @@
 # global change "hc" => "*hikecalc*"
 
+* COMMENT PRESCRIPT
+Uses src blocks.
+Customize org-bable-load-languages to include: dot, sh
+
 * Overview
 
 The *hikecalc* is intended to help you find and plan hikes suitable for your
@@ -15,12 +19,29 @@ is for the Catalina Mountain range that is North of Tucson, Arizona.
 
 
 * Example Usage
+#+BEGIN_SRC sh :session pyenv :dir ~/sandbox/hikecalc :exports none :results output
+source  hc_env/bin/activate
+#+END_SRC
+#+RESULTS:
+
 ** Get help
-: hc --help
-: hc shortest --help
+#+BEGIN_SRC sh :session pyenv :results output :exports both
+echo "Project home2=$PROJ"
+hc --help
+#+END_SRC
+#+RESULTS:
+
+#+BEGIN_SRC sh :session pyenv :results output :exports both
+hc shortest --help
+#+END_SRC
+
 
 ** What trailheads are in the file?
-: hc th data/catalina.dat
+
+#+BEGIN_SRC sh :session pyenv  :results output :exports both
+hc th data/catalina.dat
+#+END_SRC
+#+RESULTS:
 
 ** What waypoints are in the file?
 : hc wp data/catalina.dat
