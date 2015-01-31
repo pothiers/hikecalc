@@ -8,6 +8,8 @@ TODO:
 
 
 EXAMPLE:
+hc --format csv -n data/tonto-west.lut.csv --db grand-canyon.db shortest -w Indian_Garden -w Granite_Rapids -w Hermit_Rest_via_Hermit_Trail data/tonto-west.csv 
+
 hc --format csv -n data/tonto-west.lut.csv shortest -w Indian_Garden -w Hermit_Rest_via_Hermit_Trail data/tonto-west.csv 
 
 hc --loglevel=DEBUG --format csv -n data/tonto-west.lut.csv shortest -w x1 -w x4 data/tonto-west.csv 
@@ -32,6 +34,7 @@ from xml.etree.ElementTree import ElementTree
 import re
 import collections
 import csv
+import sqlite3
 
 import collections
 import networkx.drawing
@@ -42,6 +45,20 @@ from decimal import *
 mileContext = Context(prec=1, rounding=ROUND_HALF_DOWN, 
                       Emin=0, Emax=9999)
 
+
+
+def save_graph(G, dbfile):
+    con = sqlite3.connect(dbfile)
+    cur = con.cursor()
+    nodes = [(n, d.get('shortname','NULL'), d.get('longname','NULL'))
+             for n,d in G.nodes_iter(data=True)]
+    cur.executemany('insert into node values (?,?,?)',nodes)
+    edges = [(u, v, d['dist'])
+             for u,v,d in G.edges_iter(data=True)]
+    cur.executemany('insert into edge values (?,?,?)',edges)
+    con.commit()
+    con.close()
+    
 
 def csv_to_graph(csv_adj_file, G, csv_lut_file=None):
     '''Add nodes and edges to graph using data from CSV file(s).
@@ -75,7 +92,8 @@ csv_lut_file :: Maps ID to NAME.  Nodes in graph take NAME, or ID if
             for id2 in id_list:
                 node2 = lut.get(id2, id2)
                 edict = {adj_name : float(row[id2])}
-                logging.debug('edge ({}, {}) dict: {}'/format(node1, node2, edict))
+                logging.debug('edge ({}, {}) dict: {}'
+                              .format(node1, node2, edict))
                 G.add_edge(node1, node2, attr_dict=edict)
 
     
@@ -587,7 +605,7 @@ def main():
                         choices = ['csv', 'path'],
                         )
     parser.add_argument('-n', '--names', help='ID to Name mapping (csv)')
-
+    parser.add_argument('--db', help='Insert graph in this DB')    
 
     pars_t = subparsers.add_parser('table',
                 help=('Output table of distances. '
@@ -639,7 +657,9 @@ def main():
     hiker = Hiker()
     #!hiker.loadPaths(args.infile)
     hiker.loadData(args.infile, args.format, names=args.names)
-
+    if args.db:
+        save_graph(hiker.graph, args.db)
+        
     hiker.appendTrailHeadsByPattern()
 
     args.func(hiker, args)
