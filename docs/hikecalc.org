@@ -19,46 +19,46 @@ is for the Catalina Mountain range that is North of Tucson, Arizona.
 
 
 * Example Usage
-#+BEGIN_SRC sh :session pyenv :dir ~/sandbox/hikecalc :exports none :results output
+
+#+BEGIN_SRC sh :session hcenv :dir ~/sandbox/hikecalc :exports none :results output
 source  hc_env/bin/activate
+PROJ=`pwd`
 #+END_SRC
-#+RESULTS:
+# RESULTS:
 
 ** Get help
-#+BEGIN_SRC sh :session pyenv :results output :exports both
-echo "Project home2=$PROJ"
+#+BEGIN_SRC sh :session hcenv :results output :exports both
 hc --help
 #+END_SRC
-#+RESULTS:
 
-#+BEGIN_SRC sh :session pyenv :results output :exports both
+#+BEGIN_SRC sh :session hcenv :results output :exports both
 hc shortest --help
 #+END_SRC
 
 
 ** What trailheads are in the file?
 
-#+BEGIN_SRC sh :session pyenv  :results output :exports both
+#+BEGIN_SRC sh :session hcenv  :results output :exports both
 hc th data/catalina.dat
 #+END_SRC
-#+RESULTS:
+
 
 ** What waypoints are in the file?
-: hc wp data/catalina.dat
+#+BEGIN_SRC sh :session hcenv  :results output :exports both
+hc wp data/catalina.dat
+#+END_SRC
+
 
 
 ** How far is it from Sabino visitor center to The Window?
-: hc shortest -w SabinoTH -w TheWindow  data/catalina.data
-: The shortest distance from "SabinoTH" to "TheWindow" is 8.8 miles via:
-:   SabinoRoad1, RattlesnakeJct, CardiacGap, GeronimoMeadow, BridalVeilFalls, CathedralJct, TheWindow
+#+BEGIN_SRC sh :session hcenv  :results output :exports both
+hc shortest -w SabinoTH -w TheWindow  data/catalina.data
+#+END_SRC
 
 ** What is the detail distance from Butterfly to Palisades Ranger Station?
-: hc shortest -w ButterflyTH  -w PalisadesRangerTH --details data/catalina.dat 
-: The shortest distance from "ButterflyTH" to "PalisadesRangerTH" is 5.7 miles via:
-:     1.4   1.4  CrystalSprTop
-:     1.8   3.2  NovioSpring
-:     2.0   5.2  PalRangJct
-:     0.5   5.7  PalisadesRangerTH
+#+BEGIN_SRC sh :session hcenv  :results output :exports both
+hc shortest -w ButterflyTH  -w PalisadesRangerTH --details data/catalina.dat 
+#+END_SRC
 
 * TODO (NOT IMPLEMENTED YET)
 

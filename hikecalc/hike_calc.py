@@ -8,6 +8,12 @@ TODO:
 
 
 EXAMPLE:
+hc --format csv -n data/tonto-west.lut.csv shortest -w Indian_Garden -w Hermit_Rest_via_Hermit_Trail data/tonto-west.csv 
+
+hc --loglevel=DEBUG --format csv -n data/tonto-west.lut.csv shortest -w x1 -w x4 data/tonto-west.csv 
+
+hc --format csv wp  data/tonto-west.csv
+
 ipython --pylab --no-color-info --classic
 import hike_calc as hc
 h = hc.tt()
@@ -25,6 +31,7 @@ import difflib
 from xml.etree.ElementTree import ElementTree
 import re
 import collections
+import csv
 
 import collections
 import networkx.drawing
@@ -34,6 +41,44 @@ from decimal import *
 
 mileContext = Context(prec=1, rounding=ROUND_HALF_DOWN, 
                       Emin=0, Emax=9999)
+
+
+def csv_to_graph(csv_adj_file, G, csv_lut_file=None):
+    '''Add nodes and edges to graph using data from CSV file(s).
+
+csv_adj_file :: Adjacency matrix.  Row/column headers except 80,0) are
+  IDs. Top/Left (0,0) is edge attribute name.  Cells are
+  attribute value.
+
+csv_lut_file :: Maps ID to NAME.  Nodes in graph take NAME, or ID if
+    there is not ID in the LUT.
+    '''
+    lut = dict() # lut[id] => name
+    if csv_lut_file:
+        with open(csv_lut_file) as csvfile:
+            reader = csv.DictReader(csvfile)
+            for row in reader:
+                lut[row['ID']] = row['NAME']
+
+    with open(csv_adj_file) as csvfile:
+        reader = csv.DictReader(csvfile)
+        id1_fld = reader.fieldnames[0]
+        id_list = reader.fieldnames[1:]
+        adj_name = reader.fieldnames[0]
+        for id in id_list:
+            # Use ID for node name if its not in LUT
+            G.add_node(lut.get(id,id))
+
+        for row in reader:
+            id1 = row[id1_fld]
+            node1 = lut.get(id1, id1)
+            for id2 in id_list:
+                node2 = lut.get(id2, id2)
+                edict = {adj_name : float(row[id2])}
+                logging.debug('edge ({}, {}) dict: {}'/format(node1, node2, edict))
+                G.add_edge(node1, node2, attr_dict=edict)
+
+    
 
 # G=nx.Graph()
 # hc.pathsToGraph('sabino.txt',G)
@@ -141,7 +186,7 @@ def graphDistance(graph,  waypoints, explain=False):
             if path[idx] == path[idx+1]: continue
             segdist = graph[path[idx]][path[idx+1]]['dist']
             cum += segdist
-            lname = graph.node[path[idx+1]]['long_name']
+            lname = graph.node[path[idx+1]].get('long_name',path[idx+1])
             running.append((path[idx+1], segdist, cum, lname))
             logging.debug('{} miles: {} to {}'
                           .format(segdist, path[idx], path[idx+1]))
@@ -204,6 +249,28 @@ class Hiker(object):
         if eraseOld:
             self.graph.clear()
         pathsToGraph(data_file, self.graph)
+        if info:
+            print('Graph info: \n{}'.format(nx.info(self.graph)))
+
+    def loadData(self, data_file, format,
+                 names=None, eraseOld=True, info=False):
+        fname = data_file.name
+        self.pathfile = fname
+
+        if eraseOld:
+            self.graph.clear()
+
+        if format == 'path':
+            pathsToGraph(data_file, self.graph)
+        elif format == 'csv':
+            data_file.close()
+            fname = data_file.name
+            csv_to_graph(fname, self.graph, csv_lut_file=names)
+        else:
+            logging.error('Unknown data file format ("{}"} requested.'
+                          .format(format))
+            sys.exit(1)
+
         if info:
             print('Graph info: \n{}'.format(nx.info(self.graph)))
 
@@ -514,6 +581,12 @@ def main():
                         )
     parser.add_argument('infile',  help='Input file',
                         type=argparse.FileType('r') )
+    parser.add_argument('-f',  '--format',
+                        help='Input file format',
+                        default='path',
+                        choices = ['csv', 'path'],
+                        )
+    parser.add_argument('-n', '--names', help='ID to Name mapping (csv)')
 
 
     pars_t = subparsers.add_parser('table',
@@ -564,7 +637,9 @@ def main():
     ########################################
 
     hiker = Hiker()
-    hiker.loadPaths(args.infile)
+    #!hiker.loadPaths(args.infile)
+    hiker.loadData(args.infile, args.format, names=args.names)
+
     hiker.appendTrailHeadsByPattern()
 
     args.func(hiker, args)
