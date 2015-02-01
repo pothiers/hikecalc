@@ -1,0 +1,661 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>hikecalc</title>
+<!-- 2015-02-01 Sun 13:02 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Steve" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">hikecalc</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Overview</a></li>
+<li><a href="#sec-2">2. Example Usage</a>
+<ul>
+<li><a href="#sec-2-1">2.1. Get help</a></li>
+<li><a href="#sec-2-2">2.2. What trailheads are in the file?</a></li>
+<li><a href="#sec-2-3">2.3. What waypoints are in the file?</a></li>
+<li><a href="#sec-2-4">2.4. How far is it from Sabino visitor center to The Window?</a></li>
+<li><a href="#sec-2-5">2.5. What is the detail distance from Butterfly to Palisades Ranger Station?</a></li>
+</ul>
+</li>
+<li><a href="#sec-3">3. Example plan that uses HC to generated options</a>
+<ul>
+<li><a href="#sec-3-1">3.1. Grand Canyon, East of Hermit</a></li>
+<li><a href="#sec-3-2">3.2. "The Works" (4 nights)</a></li>
+<li><a href="#sec-3-3">3.3. "A Quicky" (2 nights)</a></li>
+<li><a href="#sec-3-4">3.4. "Git'r Done!" (2 nights)</a></li>
+<li><a href="#sec-3-5">3.5. "The Middle Way"  (3 nights)</a></li>
+</ul>
+</li>
+<li><a href="#sec-4">4. <span class="todo TODO">TODO</span> (NOT IMPLEMENTED YET)</a>
+<ul>
+<li><a href="#sec-4-1">4.1. Types</a></li>
+<li><a href="#sec-4-2">4.2. Things you can do</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Overview</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+The <b>hikecalc</b> is intended to help you find and plan hikes suitable for your
+available time and energy. It lets you pick alternatives that include
+various waypoints and provides total and cummulative miles.  You
+provide constraints, it does the figuring.
+</p>
+
+<p>
+The data file for <b>hikecalc</b> is a simple formatted text file. You can
+write your own or use data files that come with the
+package. Generally, one data file reflects distances between points in
+a fairly local region.  For instance, one of the supplied data files
+is for the Catalina Mountain range that is North of Tucson, Arizona.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Example Usage</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+
+<div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Get help</h3>
+<div class="outline-text-3" id="text-2-1">
+<div class="org-src-container">
+
+<pre class="src src-sh">hc --help
+</pre>
+</div>
+
+<pre class="example">
+usage: hc [-h] [--loglevel {CRTICAL,ERROR,WARNING,INFO,DEBUG}] [-f {csv,path}]
+          [-n NAMES] [--db DB]
+          {table,th,wp,shortest} ... infile
+
+positional arguments:
+  infile                Input file
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --loglevel {CRTICAL,ERROR,WARNING,INFO,DEBUG}
+                        Kind of diagnostic output
+  -f {csv,path}, --format {csv,path}
+                        Input file format
+  -n NAMES, --names NAMES
+                        ID to Name mapping (csv)
+  --db DB               Insert graph in this DB
+
+subcommands:
+  {table,th,wp,shortest}
+                        sub-command help
+    table               Output table of distances. Distance between every pair
+                        of waypoints that are connected by a path of 1 or more
+                        segments.
+    th                  Output all trail-heads
+    wp                  Output all waypoints
+    shortest            Find shortest route
+</pre>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">hc shortest --help
+</pre>
+</div>
+
+<pre class="example">
+usage: hc shortest [-h] [-w WAYPOINT] [-c CAMP CAMP] [--details]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -w WAYPOINT, --waypoint WAYPOINT
+                        Waypoint to include. (multi allowed)
+  -c CAMP CAMP, --camp CAMP CAMP
+                        Camp to include. Reset distance. (multi allowed)
+  --details             List cummulative distance)
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2"><span class="section-number-3">2.2</span> What trailheads are in the file?</h3>
+<div class="outline-text-3" id="text-2-2">
+<div class="org-src-container">
+
+<pre class="src src-sh">hc th $CATDATA
+</pre>
+</div>
+
+<pre class="example">
+Trail-heads:
+  PimaCynTH
+  PhonelineTH
+  SabinoTH
+  MarshallGulchTH
+  PrisonCampTH
+  MolinoTH
+  PalisadesTH
+  BoxCampTH
+  GordonHirabayashiTH
+  FingerRockTH
+  ButterflyTH
+  PalisadesRangerTH
+  BearCynTH
+  VentanaTH
+  MtLemmonTH
+  RomeroTH
+</pre>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3"><span class="section-number-3">2.3</span> What waypoints are in the file?</h3>
+<div class="outline-text-3" id="text-2-3">
+<div class="org-src-container">
+
+<pre class="src src-sh">hc wp $CATDATA
+</pre>
+</div>
+
+<pre class="example">
+Waypoints:
+  MolinoTH
+  PimaCynTH
+  CathedralSaddle
+  SycamoreReservoir
+  PontatocCynTE
+  GordonHirabayashiTH
+  CrystalSprTop
+  Bear4720
+  BoxSpringTS
+  SabinoCyn@EspereroTr
+  SabinoRoadTop
+  Connector2Bot
+  SabinoTH
+  VentanaTH
+  RomeroPass
+  PalisadesTH
+  RomeroPools
+  PalRangJct
+  SabinoCyn@RattlesnakeCyn
+  FingerRockTH
+  LemmonTrail@WildernessOfRocks
+  MontrosePools
+  j5
+  CardiacGap
+  Cathedral_route
+  PimaSpring
+  SabinoRoad1
+  LemmonPools
+  GeronimoMeadow
+  MarshallSaddle
+  SevenFalls
+  BlackettsTE
+  EastForkTE
+  FR1
+  BridalVeilFalls
+  RattlesnakeJct
+  Connector2Top
+  ApacheSpring
+  BearCynTH
+  CathedralPeak
+  RomeroTH
+  MarshallGulchTH
+  HutchsPool
+  NovioSpring
+  MtLemmonTH
+  PrisonSaddle
+  MtKimbleJct
+  BoxCampTE
+  SabinoCynTS
+  PhonelineTH
+  LemmonLookoutBot
+  CrystalSprBot
+  MudSpring
+  PrisonCampTH
+  PalisadesBot
+  MaidenPools
+  BlackettsTS
+  PalisadesRangerTH
+  CathedralRockTS
+  FingerRockSpring
+  ButterflyTH
+  SabinoBathroomTop
+  VentanaRidge
+  CathedralJct
+  PontatocRidgeTE
+  Connector1Top
+  shortcutToBear
+  Tr6Jct
+  PhonelineTE
+  LemmonPoolJct
+  PontatocJct
+  LemmonLookoutTop
+  pcJct
+  BoxCampTH
+  TheWindow
+  WestForkTE
+  SabinoCynSwim1
+</pre>
+</div>
+</div>
+
+
+
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4"><span class="section-number-3">2.4</span> How far is it from Sabino visitor center to The Window?</h3>
+<div class="outline-text-3" id="text-2-4">
+<div class="org-src-container">
+
+<pre class="src src-sh">hc shortest -w SabinoTH -w TheWindow  $CATDATA
+</pre>
+</div>
+
+<pre class="example">
+The shortest distance from "SabinoTH" to "TheWindow" is 8.8 miles via:
+  SabinoTH, SabinoRoad1, RattlesnakeJct, CardiacGap, GeronimoMeadow, BridalVeilFalls, CathedralJct, TheWindow
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5"><span class="section-number-3">2.5</span> What is the detail distance from Butterfly to Palisades Ranger Station?</h3>
+<div class="outline-text-3" id="text-2-5">
+<div class="org-src-container">
+
+<pre class="src src-sh">hc shortest -w ButterflyTH  -w PalisadesRangerTH --details $CATDATA
+</pre>
+</div>
+
+<pre class="example">
+The shortest distance from "ButterflyTH" to "PalisadesRangerTH" is 5.7 miles via:
+    0.0   0.0  ButterflyTH                Start
+    1.4   1.4  CrystalSprTop              
+    1.8   3.2  NovioSpring                
+    2.0   5.2  PalRangJct                 
+    0.5   5.7  PalisadesRangerTH          Done
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Example plan that uses HC to generated options</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Grand Canyon, East of Hermit</h3>
+<div class="outline-text-3" id="text-3-1">
+</div>
+</div>
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> "The Works" (4 nights)</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+<b>Covers everything Steve has burning need to do between Kaibab and Hermit.</b>
+Hits the Colorado - TWICE!
+</p>
+
+<p>
+Includes optional side-hikes to:
+</p>
+<ol class="org-ol">
+<li>Plateau<sub>Point</sub>   at Sunset! (day pack)
+</li>
+<li>Granite<sub>Rapids</sub>  (camp)
+</li>
+<li>Hermit<sub>Rapids</sub>   (with time to relax, day pack)
+</li>
+</ol>
+
+<p>
+No Plateau sunset. Could do Plateau at end of Day 1 but it would add
+to overall miles and make day one 3 miles longer.
+</p>
+
+<pre class="example">
+The shortest distance from "South_Kaibab_TH" to "Hermit_TH" is 39.0 miles via:
+    0.0   0.0  South_Kaibab_TH            Start
+    1.5   1.5  Cedar_Ridge                
+    1.5   3.0  Skeleton_Point             
+    1.4   4.4  Tipoff                     
+    4.4   8.8  Indian_Garden_CG           Camp1
+    0.7   0.7  Plateau_Point_JCT          
+    0.8   1.5  Plateau_Point              
+    0.8   2.3  Plateau_Point_JCT          
+    1.8   4.1  Horn_Creek                 Camp2
+    4.8   4.8  Salt_Creek                 
+    2.1   6.9  Cedar_Spring               
+    1.3   8.2  Monument_Creek             
+    1.6   9.8  Granite_Rapids             Camp3
+    1.6   1.6  Monument_Creek             
+    3.5   5.1  Hermit_Creek               Camp4
+    1.5   1.5  Hermit_Rapids              
+    1.5   3.0  Hermit_Creek               Camp4
+    1.2   1.2  Tonto_JCT                  
+    7.0   8.2  Hermit_TH                  Done
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3"><span class="section-number-3">3.3</span> "A Quicky" (2 nights)</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+<b>The shortest trip that finishes Steve's Thanksgiving hike</b> EXCEPT it adds
+Plateau<sub>Point</sub> at sunset (day pack).
+</p>
+<ul class="org-ul">
+<li>No South Kaibab.
+</li>
+<li>No River.
+</li>
+</ul>
+
+<pre class="example">
+The shortest distance from "Bright_Angel_TH" to "Hermit_TH" is 27.8 miles via:
+    0.0   0.0  Bright_Angel_TH            Start
+    1.6   1.6  Mile_and_a_half_Resthouse  
+    1.5   3.1  Three_Mile_Resthouse       
+    1.7   4.8  Indian_Garden_CG           Camp1
+    0.7   0.7  Plateau_Point_JCT          
+    0.8   1.5  Plateau_Point              
+    0.8   2.3  Plateau_Point_JCT          
+    0.7   3.0  Indian_Garden_CG           Camp1
+    0.7   0.7  Plateau_Point_JCT          
+    1.8   2.5  Horn_Creek                 
+    4.8   7.3  Salt_Creek                 
+    2.1   9.4  Cedar_Spring               
+    1.3  10.7  Monument_Creek             Camp2
+    2.3   2.3  Tonto_JCT                  
+    7.0   9.3  Hermit_TH                  Done
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4"><span class="section-number-3">3.4</span> "Git'r Done!" (2 nights)</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+<b>Minimize camping, but hike a long day 2 (which is all Tonto).</b>
+</p>
+<ul class="org-ul">
+<li>No River
+</li>
+<li>No Plateau sunset.
+</li>
+</ul>
+
+<p>
+Could do Plateau at end of Day 1 but it would add
+to overall miles and make day one 3 miles longer.
+</p>
+
+<pre class="example">
+The shortest distance from "South_Kaibab_TH" to "Hermit_TH" is 30.4 miles via:
+    0.0   0.0  South_Kaibab_TH            Start
+    1.5   1.5  Cedar_Ridge                
+    1.5   3.0  Skeleton_Point             
+    1.4   4.4  Tipoff                     
+    4.4   8.8  Indian_Garden_CG           Camp1
+    0.7   0.7  Plateau_Point_JCT          
+    0.8   1.5  Plateau_Point              
+    0.8   2.3  Plateau_Point_JCT          
+    1.8   4.1  Horn_Creek                 
+    4.8   8.9  Salt_Creek                 
+    2.1  11.0  Cedar_Spring               
+    1.3  12.3  Monument_Creek             Camp2
+    2.3   2.3  Tonto_JCT                  
+    7.0   9.3  Hermit_TH                  Done
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-3-5" class="outline-3">
+<h3 id="sec-3-5"><span class="section-number-3">3.5</span> "The Middle Way"  (3 nights)</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+<b>A compromise of the other options.</b>
+</p>
+<ul class="org-ul">
+<li>Plateau<sub>Point</sub> at sunset (day pack).
+</li>
+<li>Hits the river once (day pack).
+</li>
+</ul>
+
+<pre class="example">
+The shortest distance from "South_Kaibab_TH" to "Hermit_TH" is 37.2 miles via:
+    0.0   0.0  South_Kaibab_TH            Start
+    1.5   1.5  Cedar_Ridge                
+    1.5   3.0  Skeleton_Point             
+    1.4   4.4  Tipoff                     
+    4.4   8.8  Indian_Garden_CG           Camp1
+    0.7   0.7  Plateau_Point_JCT          
+    0.8   1.5  Plateau_Point              
+    0.8   2.3  Plateau_Point_JCT          
+    0.7   3.0  Indian_Garden_CG           Camp1
+    0.7   0.7  Plateau_Point_JCT          
+    1.8   2.5  Horn_Creek                 Camp2
+    4.8   4.8  Salt_Creek                 
+    2.1   6.9  Cedar_Spring               
+    1.3   8.2  Monument_Creek             
+    2.3  10.5  Tonto_JCT                  
+    1.2  11.7  Hermit_Creek               Camp3
+    1.5   1.5  Hermit_Rapids              
+    1.5   3.0  Hermit_Creek               Camp3
+    1.2   1.2  Tonto_JCT                  
+    7.0   8.2  Hermit_TH                  Done
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> <span class="todo TODO">TODO</span> (NOT IMPLEMENTED YET)</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Types</h3>
+<div class="outline-text-3" id="text-4-1">
+<dl class="org-dl">
+<dt> OB </dt><dd>out-and-back, from Trail-Head to some destination. Retrace
+path back to TH.
+</dd>
+<dt> Loop </dt><dd>Start and end at the same TH. But don't retrace path.
+</dd>
+<dt> Through </dt><dd>Start and end at different Trail-Heads.  You probably
+need a shuttle to get back to where you started.
+</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Things you can do</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+For each path, you can get a simple summary of the total, or you can
+get a segment by segment running total of the milage.
+</p>
+
+<ul class="org-ul">
+<li><code>[&#xa0;]</code> OB (Out and Back) - "Round Trip".  
+<ul class="org-ul">
+<li>You provide TH and turn around point
+</li>
+<li>Returns the shortest route out and back to your turn-around point
+(turn-around point must be a waypoint in the data file)
+</li>
+</ul>
+</li>
+<li><code>[&#xa0;]</code> OB - max distance
+<ul class="org-ul">
+<li>You provide TH and the maximum distance you want to hike.
+</li>
+<li>Reports possible turn around points with round-trip distance to
+each.
+</li>
+</ul>
+</li>
+<li><code>[&#xa0;]</code> Through hike with shuttle
+<ul class="org-ul">
+<li>You provide start and end TH.
+</li>
+<li>Report 
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Steve</p>
+<p class="date">Created: 2015-02-01 Sun 13:02</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.4.1 (<a href="http://orgmode.org">Org</a> mode 8.2.10)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

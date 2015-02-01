@@ -8,6 +8,7 @@ TODO:
 
 
 EXAMPLE:
+sqlite3  grand-canyon.db < hikecalc/graph_schema.sql
 hc --format csv -n data/tonto-west.lut.csv --db grand-canyon.db shortest -w Indian_Garden -w Granite_Rapids -w Hermit_Rest_via_Hermit_Trail data/tonto-west.csv 
 
 hc --format csv -n data/tonto-west.lut.csv shortest -w Indian_Garden -w Hermit_Rest_via_Hermit_Trail data/tonto-west.csv 
@@ -180,7 +181,7 @@ String is removed from token stream but saved in association with WP in a LUT.
 # tuple for running total    
 #!Runtup = collections.namedtuple('Runtup','name,seg,cumm,lname')
 
-def graphDistance(graph,  waypoints, explain=False):
+def graphDistance(graph,  waypoints, camps=None, explain=False):
     '''Find the (shortest) distance of the path that connects
     given list of waypoints. Use explain=True to get distance
     breakdown'''
@@ -197,15 +198,25 @@ def graphDistance(graph,  waypoints, explain=False):
         total += seg
         logging.debug('seg=%.1f total=%.1f From %s to %s',seg,total,a,b)
         logging.debug('  path={}'.format(path))
-    running = [] # [runtup, ...]
+
     if explain:
+        if not camps:
+            camps = dict()
+            
+        lname = graph.node[path[0]].get('long_name',path[0])
+        running = [(path[0], 0, 0, lname, 'Start')] # [runtup, ...]
         cum = 0
         for idx in range(len(path)-1):
             if path[idx] == path[idx+1]: continue
             segdist = graph[path[idx]][path[idx+1]]['dist']
             cum += segdist
             lname = graph.node[path[idx+1]].get('long_name',path[idx+1])
-            running.append((path[idx+1], segdist, cum, lname))
+            comment = camps.get(path[idx+1],'Camp') if path[idx+1] in camps else ''
+            if idx == range(len(path)-1)[-1]:
+                comment = 'Done'
+            running.append((path[idx+1], segdist, cum, lname, comment))
+            if path[idx+1] in camps:
+                cum = 0
             logging.debug('{} miles: {} to {}'
                           .format(segdist, path[idx], path[idx+1]))
     # running :: [(wp, segDist, cumDist, longName), ...]
@@ -552,23 +563,27 @@ def genTable(hiker, args):
     
 
 def infoShortest(hiker, args):
-    logging.debug('infoShortest using THs ({}): '.format(args.waypoints))
+    waypoints = args.waypoint
+    camps = dict(args.camp) if args.camp else dict()
+    logging.info('infoShortest using waypoints: {}, camps: {} '
+                 .format(waypoints,camps.keys()))
 
-    missing = set(args.waypoints) - set(hiker.graph.nodes())
+    missing = set(waypoints) - set(hiker.graph.nodes())
     if 0 != len(missing):
         print('The waypoints: {} are not in the data-set.'.format(missing))
         infoWaypoints(hiker, args)
         sys.exit(1)
-    total, running = graphDistance(hiker.graph, args.waypoints, explain=True)
+    total, running = graphDistance(hiker.graph, waypoints,
+                                   camps=camps, explain=True)
     if args.details:
-        details = '\n  '.join(['{:>5.1f} {:>5.1f}  {}'
-                               .format(sdist, cdist, wp)
-                               for (wp, sdist, cdist, lname) in running])
+        details = '\n  '.join(['{:>5.1f} {:>5.1f}  {:<25s}  {}'
+                               .format(sdist, cdist, wp, rem)
+                               for (wp, sdist, cdist, lname, rem) in running])
     else:
-        details = ', '.join([wp for (wp,segdist, cumdist, lname) in running])
+        details = ', '.join([wp for (wp,segdist, cumdist, lname,_) in running])
     print('The shortest distance from "{}" to "{}" is {:.1f} miles via:\n  {}'
           .format(
-              args.waypoints[0],
+              waypoints[0],
               running[-1][0],
               total,
               details
@@ -630,9 +645,14 @@ def main():
 
     pars_s = subparsers.add_parser('shortest',
                                    help='Find shortest route')
-    pars_s.add_argument('-w', '--waypoints', 
+    pars_s.add_argument('-w', '--waypoint',
+                        #!nargs=2,
                         action='append',
-                        help='List of waypoints to consider. (multi allowed)')
+                        help='Waypoint to include. (multi allowed)')
+    pars_s.add_argument('-c', '--camp',
+                        nargs=2,
+                        action='append',
+                        help='Camp to include. Reset distance. (multi allowed)')
     pars_s.add_argument('--details', 
                         action='store_true',
                         help='List cummulative distance)')
