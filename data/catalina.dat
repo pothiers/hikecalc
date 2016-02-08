@@ -1,4 +1,4 @@
-# "trail" format
+# "trail" or "path" format
 #
 # Line starts with NUMBER or WAYPOINT
 # NUMBER:: distance from previous WAYPOINT
@@ -45,6 +45,11 @@ PrisonCampTH 0.0 GordonHirabayashiTH						# "alias"
 BoxCampTH 1.8 BoxSpringTS 3.0 ApacheSpring 2.3 BoxCampTE 
 
 RomeroTH 1.1 MontrosePools 1.7 RomeroPools 4.4 RomeroPass 1.8 WestForkTE
+RomeroTH 0.8 SutherlandBot 1.8 TrailLinkJct 2.8 e4800 4.3 SamaniegoJct
+0.8 e8600 2.4 WildernessOfRocksJct 1.9 RomeroPass
+RomeroTH 0.6 RomeroLowerJct 0.5 MontrosePools 1.7 RomeroPools
+RomeroLowerJct 0.9 SutherlandBot
+CSPEquestrianCenter 2.6 TrailLink 2.2 e3400
 
 BridalVeilFalls  .9 CathedralRockTS 1.1 CathedralSaddle 1.9 WestForkTE
 CathedralSaddle .9 CathedralPeak

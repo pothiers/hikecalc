@@ -204,22 +204,26 @@ def graphDistance(graph,  waypoints, camps=None, explain=False):
             camps = dict()
             
         lname = graph.node[path[0]].get('long_name',path[0])
-        running = [(path[0], 0, 0, lname, 'Start')] # [runtup, ...]
-        cum = 0
+        running = [(path[0], 0, 0, 0, lname, 'Start')] # [runtup, ...]
+        dcum = 0
+        tcum = 0
         for idx in range(len(path)-1):
             if path[idx] == path[idx+1]: continue
             segdist = graph[path[idx]][path[idx+1]]['dist']
-            cum += segdist
+            dcum += segdist
+            tcum += segdist
             lname = graph.node[path[idx+1]].get('long_name',path[idx+1])
             comment = camps.get(path[idx+1],'Camp') if path[idx+1] in camps else ''
             if idx == range(len(path)-1)[-1]:
                 comment = 'Done'
-            running.append((path[idx+1], segdist, cum, lname, comment))
+            running.append((path[idx+1], segdist, dcum, tcum, lname, comment))
             if path[idx+1] in camps:
-                cum = 0
+                dcum = 0
+                running.append(('---------', 0, 0, tcum, lname, '----------'))
+                #!running.append((path[idx+1], 0, 0, tcum, lname, 'Day Start'))
             logging.debug('{} miles: {} to {}'
                           .format(segdist, path[idx], path[idx+1]))
-    # running :: [(wp, segDist, cumDist, longName), ...]
+    # running :: [(wp, segDist, dayCumDist, tripCumDist, longName, comment),...]
     return total,running
 
 
@@ -563,8 +567,17 @@ def genTable(hiker, args):
     
 
 def infoShortest(hiker, args):
+    if args.first_day:
+        d,m,y = [int(n) for n in args.first_day.split('/')]
+        firstday =  date(y,m,d)
+
     waypoints = args.waypoint
-    camps = dict(args.camp) if args.camp else dict()
+    if args.camp:
+        pfx = args.prefix_camp if args.prefix_camp else 'Night '
+        camp_list = [(wp,pfx+','.join(nights)) for (wp,*nights) in args.camp]
+        camps = dict(camp_list) 
+    else:
+        camps = dict()
     logging.info('infoShortest using waypoints: {}, camps: {} '
                  .format(waypoints,camps.keys()))
 
@@ -576,11 +589,12 @@ def infoShortest(hiker, args):
     total, running = graphDistance(hiker.graph, waypoints,
                                    camps=camps, explain=True)
     if args.details:
-        details = '\n  '.join(['{:>5.1f} {:>5.1f}  {:<25s}  {}'
-                               .format(sdist, cdist, wp, rem)
-                               for (wp, sdist, cdist, lname, rem) in running])
+        details = '\n  '.join(['{:>5.1f} {:>5.1f} {:>5.1f} {:<25s}  {}'
+                               .format(sdist, ddist, tdist, wp, rem)
+                               for (wp, sdist, ddist, tdist, lname, rem)
+                               in running])
     else:
-        details = ', '.join([wp for (wp,segdist, cumdist, lname,_) in running])
+        details = ', '.join([wp for (wp, *_) in running])
     print('The shortest distance from "{}" to "{}" is {:.1f} miles via:\n  {}'
           .format(
               waypoints[0],
@@ -646,16 +660,23 @@ def main():
     pars_s = subparsers.add_parser('shortest',
                                    help='Find shortest route')
     pars_s.add_argument('-w', '--waypoint',
-                        #!nargs=2,
                         action='append',
                         help='Waypoint to include. (multi allowed)')
     pars_s.add_argument('-c', '--camp',
                         nargs=2,
                         action='append',
-                        help='Camp to include. Reset distance. (multi allowed)')
+                        help=('(waypoint night-number) of camp. Reset '
+                              'distance. (multi allowed)'))
     pars_s.add_argument('--details', 
                         action='store_true',
                         help='List cummulative distance)')
+    pars_s.add_argument('--prefix_camp',
+                        default='Camp Night ',
+                        help=('Prefix camp number with this string when '
+                              'outputting details.'))
+    pars_s.add_argument('--first_day',
+                        help='Date (mm/dd/yyyy) of first day of hiking')
+                              
     pars_s.set_defaults(func=infoShortest)
 
 

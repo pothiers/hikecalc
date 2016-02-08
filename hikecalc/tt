@@ -7,4 +7,4 @@ echo "Wrote foo.csv"
 
 ./hike_calc.py shortest -w MolinoTH -w BearCynTH $data 
 
-./hike_calc.py shortest --cum -w DouglasSpringTH -w TangueVerdeTH ../data/rincon-distance-list.txt 
+./hike_calc.py shortest --cum -w DouglasSpringTH -w TangueVerdeTH ../data/rincon-distance-list.txt

@@ -15,22 +15,26 @@ available time and energy. It lets you pick alternatives that include
 various waypoints and provides total and cummulative miles.  You
 provide constraints, it does the figuring.
 
-The data file for *hikecalc* is a simple formatted text file. You can
+The data file for *hikecalc* is a simply formatted text file. You can
 write your own or use data files that come with the
 package. Generally, one data file reflects distances between points in
 a fairly local region.  For instance, one of the supplied data files
 is for the Catalina Mountain range that is North of Tucson, Arizona.
 
+* Reports; what hikecalc can tell you
+Every time you invoke hikecalc, it outputs something.  We call the
+outputs "reports" even though they are sometimes very simple lists.
 
-* Example Usage
+# describe a "detail" output including 3 distance column, WP column,
+# and "annotation" column (camp night, "Start", "Done")
 
+* Example Use Cases
 #+BEGIN_SRC sh :session hcenv :dir ~/sandbox/hikecalc :exports none :results output
 source  hc_env/bin/activate
 export CATDATA=~/sandbox/hikecalc/data/catalina.dat
 PROJ=`pwd`
 #+END_SRC
 # RESULTS:
-
 ** Get help
 #+BEGIN_SRC sh :session hcenv :results output :exports both
 hc --help
@@ -40,21 +44,16 @@ hc --help
 hc shortest --help
 #+END_SRC
 
-
 ** What trailheads are in the file?
 
 #+BEGIN_SRC sh :session hcenv  :results output :exports both
 hc th $CATDATA
 #+END_SRC
 
-
 ** What waypoints are in the file?
 #+BEGIN_SRC sh :session hcenv  :results output :exports both
 hc wp $CATDATA
 #+END_SRC
-
-
-
 ** How far is it from Sabino visitor center to The Window?
 #+BEGIN_SRC sh :session hcenv  :results output :exports both
 hc shortest -w SabinoTH -w TheWindow  $CATDATA
@@ -65,7 +64,62 @@ hc shortest -w SabinoTH -w TheWindow  $CATDATA
 hc shortest -w ButterflyTH  -w PalisadesRangerTH --details $CATDATA 
 #+END_SRC
 
+** Figure out multi-day hike with given end-points
+We want start at Marshall Gulch and end at Sabino Visitor center. I
+car shuttle will be used. So, its a thru-hike, not out-and-back or
+loop. We will take 4 days (3 nights).
+
+First we list the trail-heads so we know the precise names of our
+start and end points as given in the data file.
+: hc th data/catalina.dat 
+
+Then we calculate the basic route:
+
+#+BEGIN_SRC sh :session hcenv  :results output :exports both
+hc shortest --details -w MarshallGulchTH -w SabinoTH $CATDATA
+#+END_SRC
+
+This gives are the route, tells us the total trip will be 18.7 miles.
+Since we want to take 4 days, we should AVERAGE 4.7 per day.  But we
+expect to start a little later on the first day since we have to get
+up the mountain and we don't like getting up real early.
+
+Looking at our detail route, we pick the waypoints of the places we
+want to camp near.  We choose LemmonPoolJct, WestFortTE,
+BridalVeilFalls. 
+#+BEGIN_SRC sh :session hcenv  :results output :exports both
+hc shortest --details -w MarshallGulchTH  -w SabinoTH -c LemmonPoolJct 1   -c WestForkTE 2 -c BridalVeilFalls 3 $CATDATA
+#+END_SRC
+
+This lists 3 columns of distances:
+1. segment 
+2. running total for day
+3. running total for trip
+
+We see that day 1 and day 3 are lower milage days. This feels right
+since we'll start later on day 1 and day 3 goes up and over Cathedral
+Saddle so will be harder.  The last day is the the highest milage but
+we'll be on the road for a little and besides, we'll be sleeping in
+our own bed that night!
+
 * Example: Use HC + org-mode to generate planning document with hike options
+This example was from an actually planning activity. 
+
+The use of HC for this activity was imbedded in a text document that
+was edited using Emacs and [[http://orgmode.org/][org-mode]].  If that means nothing to you,
+that's ok.  The example should still be informative. 
+
+*** For Emacs Users
+If you use Emacs, you should take a look at [[http://orgmode.org/][org-mode]] and at this
+very file (docs/hikecalc.org).  It will show you how you can write a
+nice looking document that includes anything you want to say about a
+trip AND includes reports from HC but avoids having to cut/paste
+the HC output.  The beauty is that as you develop your planning
+document you can be free to tweak the parameters to HC in the reader
+friendly document, without the hassle of having to re-import or
+cut/paste.  Emacs and org-mode will run HC for you when you
+publish/export your document and include the HC reports for you.
+
 ** Grand Canyon, East of Hermit
 :PROPERTIES:
 :EXPORT_FILE_NAME: grand-canyon-hermitoctober
@@ -187,3 +241,17 @@ get a segment by segment running total of the milage.
 - [ ] Through hike with shuttle
   + You provide start and end TH.
   + Report 
+* COMMENT POSTSCRIPT
+#+TITLE: hikecalc
+#+DATE: <2015-03-08 Sun>
+#+AUTHOR: Steve
+#+OPTIONS: ':nil *:t -:t ::t <:t H:3 \n:nil ^:nil arch:headline
+#+OPTIONS: author:t c:nil creator:comment d:(not "LOGBOOK") date:t
+#+OPTIONS: e:t email:nil f:t inline:t num:t p:nil pri:nil stat:t
+#+OPTIONS: tags:t tasks:t tex:t timestamp:t toc:t todo:t |:t
+#+CREATOR: Emacs 24.4.1 (Org mode 8.2.10)
+#+DESCRIPTION:
+#+EXCLUDE_TAGS: noexport
+#+KEYWORDS:
+#+LANGUAGE: en
+#+SELECT_TAGS: export

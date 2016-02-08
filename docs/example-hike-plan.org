@@ -1,0 +1,21 @@
+* COMMENT PRESCRIPT
+NOTE: This file includes some org mode src blocks. Some are for using
+graphviz to generate figure, some to use SH to run programs described
+here to get their usage documentation. To get good export, emacs must
+be configured appropriately.
+
+Customize org-bable-load-languages to include: dot, sh
+
+* Plan
+#+BEGIN_SRC sh :session hcenv :dir ~/sandbox/hikecalc :exports none :results output
+source  hc_env/bin/activate
+export CATDATA=~/sandbox/hikecalc/data/catalina.dat
+PROJ=`pwd`
+#+END_SRC
+# RESULTS:
+
+* Route
+#+BEGIN_SRC sh :session hcenv :exports results :results output
+hc shortest --details -w MtLemmonTH -w LemmonTrail@WildernessOfRocks -w LemmonPools -w LemmonLookoutBot -w MtLemmonTH $CATDATA
+#+END_SRC
+#+RESULTS:

@@ -1,6 +1,12 @@
 OBSOLETE/
 hc_env/
 foo.*
+*.tex
+docs/example-hike-plan.pdf
+env-hikecalc
+grand-canyon.db
+hikecalc/tt0
+ss
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
