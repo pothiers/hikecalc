@@ -566,6 +566,30 @@ def genTable(hiker, args):
    #!          h.distance(wps_str.split(','), explain=True))))
     
 
+def shortest(hiker, waypoints,
+             #campwps=None, # [(wp,nightNum...), ...]
+             camps=None, # dict[wp] => [nightLabel, ...]
+             verbose=False):
+    if camps == None:
+        camps = dict()
+
+    missing = set(waypoints) - set(hiker.graph.nodes())
+    if 0 != len(missing):
+        print('The waypoints: {} are not in the data-set.'.format(missing))
+        infoWaypoints(hiker, args)
+        sys.exit(1)
+    total, running = graphDistance(hiker.graph, waypoints,
+                                   camps=camps, explain=True)
+    if verbose:
+        details = '\n  '.join(['{:>5.1f} {:>5.1f} {:>5.1f} {:<25s}  {}'
+                               .format(sdist, ddist, tdist, wp, rem)
+                               for (wp, sdist, ddist, tdist, lname, rem)
+                               in running])
+    else:
+        details = ', '.join([wp for (wp, *_) in running])
+    print('The shortest distance from "{}" to "{}" is {:.1f} miles via:\n  {}'
+          .format(waypoints[0], running[-1][0], total, details))
+
 def infoShortest(hiker, args):
     if args.first_day:
         d,m,y = [int(n) for n in args.first_day.split('/')]
@@ -579,29 +603,30 @@ def infoShortest(hiker, args):
     else:
         camps = dict()
     logging.info('infoShortest using waypoints: {}, camps: {} '
-                 .format(waypoints,camps.keys()))
-
-    missing = set(waypoints) - set(hiker.graph.nodes())
-    if 0 != len(missing):
-        print('The waypoints: {} are not in the data-set.'.format(missing))
-        infoWaypoints(hiker, args)
-        sys.exit(1)
-    total, running = graphDistance(hiker.graph, waypoints,
-                                   camps=camps, explain=True)
-    if args.details:
-        details = '\n  '.join(['{:>5.1f} {:>5.1f} {:>5.1f} {:<25s}  {}'
-                               .format(sdist, ddist, tdist, wp, rem)
-                               for (wp, sdist, ddist, tdist, lname, rem)
-                               in running])
-    else:
-        details = ', '.join([wp for (wp, *_) in running])
-    print('The shortest distance from "{}" to "{}" is {:.1f} miles via:\n  {}'
-          .format(
-              waypoints[0],
-              running[-1][0],
-              total,
-              details
-          ))
+                 .format(args.waypoints, camps.keys()))
+    
+    #! missing = set(waypoints) - set(hiker.graph.nodes())
+    #! if 0 != len(missing):
+    #!     print('The waypoints: {} are not in the data-set.'.format(missing))
+    #!     infoWaypoints(hiker, args)
+    #!     sys.exit(1)
+    #! total, running = graphDistance(hiker.graph, waypoints,
+    #!                                camps=camps, explain=True)
+    #! if args.details:
+    #!     details = '\n  '.join(['{:>5.1f} {:>5.1f} {:>5.1f} {:<25s}  {}'
+    #!                            .format(sdist, ddist, tdist, wp, rem)
+    #!                            for (wp, sdist, ddist, tdist, lname, rem)
+    #!                            in running])
+    #! else:
+    #!     details = ', '.join([wp for (wp, *_) in running])
+    #! print('The shortest distance from "{}" to "{}" is {:.1f} miles via:\n  {}'
+    #!       .format(
+    #!           waypoints[0],
+    #!           running[-1][0],
+    #!           total,
+    #!           details
+    #!       ))
+    shortest(hiker, args.waypoints, camps=camps, verbose=args.details)
                 
 def infoTrailheads(hiker, args):
     print('Trail-heads:\n  {}'.format('\n  '.join(hiker.trailheads)))

@@ -94,6 +94,7 @@ setup(
     entry_points={
         'console_scripts': [
             'hc=hikecalc.hike_calc:main',
+            'hikecalc=hikecalc.cli:main',
         ],
     },
 )
