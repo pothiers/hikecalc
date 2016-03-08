@@ -31,7 +31,12 @@ class HikecalcCli(cmd.Cmd):
     hiker = hc.Hiker()
 
     def parse_waypoints(self, arg):
-        return arg.split()
+        """Parse space delimited list of waypoints.  Each WP of form:
+        wpname[.camp...] """
+        wps = arg.split()
+        camps = dict([(wp.split('.')[0], wp.split('.')[1:]) for wp in wps])
+        waypoints = [wp.split('.')[0] for wp in wps]
+        return waypoints, camps
 
     ############################################################################
     ### ----- HikeCalc commands --------
@@ -42,15 +47,23 @@ class HikecalcCli(cmd.Cmd):
         self.hiker.loadData(open(arg), 'path')
         self.hiker.appendTrailHeadsByPattern()
     def do_shortest(self, arg):
-        """Display shortest route that passes through list of waypoints."""
-        waypoints = self.parse_waypoints(arg)
-        hc.shortest(self.hiker, waypoints)
+        """Display shortest route that passes through list of waypoints.
+        SYNTAX: shortest wpname[.camp1...] ..."""
+        waypoints,camps = self.parse_waypoints(arg)
+        hc.shortest(self.hiker, waypoints, camps=camps, verbose=True)
     def do_th(self, arg):
         """Display names of all loaded trail-heads."""
         print('Trail-heads:\n  {}'.format('\n  '.join(self.hiker.trailheads)))
     def do_wp(self, arg):
         """Display names of all loaded waypoints."""
         print('Waypoints:\n  {}'.format('\n  '.join(self.hiker.graph.nodes())))
+    def do_dist(self, arg):
+        """\
+        Display table of distances between all waypoint pairs connected by at
+        least one segment.
+        SYNTAX: dist [CSV_filename]
+        """
+        hc.genTable(self.hiker, None, csvfile=arg)
     def do_quit(self, arg):
         """Stop futzing with hike planning and exit"""
         print('Exiting Hike Calculating Tool')

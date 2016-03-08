@@ -550,15 +550,23 @@ def tt_1():
            %(wps_str,
              h.distance(wps_str.split(','), explain=True))))
 
-def genTable(hiker, args):
+def genTable(hiker, args, csvfile=None):
     #!h = Hiker()
     #!h.loadPaths(dist_data_file)
     #!h.appendTrailHeadsByPattern()
 
     mat = hiker.distanceTable()
     #! print('Distance table: {}'.format(mat))
-    for ((n1, n2),dist) in mat.items():
-        print('{}, \t{}, \t{}'.format(n1, n2, dist))
+    if csvfile == None:
+        for ((n1, n2),dist) in mat.items():
+            print('{}, \t{}, \t{}'.format(n1, n2, dist))
+        return None
+    with open(csvfile, 'w') as csv:
+        for ((n1, n2),dist) in mat.items():
+            if n1 == n2:
+                continue
+            print('{},{},{}'.format(n1, n2, dist), file=csv)
+        
     
    #! wps_str = 'MarshallGulchTH,MtKimbleJct,MudSpring,MarshallGulchTH'
    #! print(('Distances for: %s:\n%s'
@@ -576,7 +584,7 @@ def shortest(hiker, waypoints,
     missing = set(waypoints) - set(hiker.graph.nodes())
     if 0 != len(missing):
         print('The waypoints: {} are not in the data-set.'.format(missing))
-        infoWaypoints(hiker, args)
+        infoWaypoints(hiker, None)
         sys.exit(1)
     total, running = graphDistance(hiker.graph, waypoints,
                                    camps=camps, explain=True)
@@ -597,13 +605,15 @@ def infoShortest(hiker, args):
 
     waypoints = args.waypoint
     if args.camp:
-        pfx = args.prefix_camp if args.prefix_camp else 'Night '
+        #pfx = args.prefix_camp if args.prefix_camp else 'Night '
+        pfx = args.prefix_camp if args.prefix_camp else ''
         camp_list = [(wp,pfx+','.join(nights)) for (wp,*nights) in args.camp]
         camps = dict(camp_list) 
     else:
         camps = dict()
     logging.info('infoShortest using waypoints: {}, camps: {} '
-                 .format(args.waypoints, camps.keys()))
+                 .format(args.waypoint, camps.keys()))
+    logging.info('camps={}'.format(camps))
     
     #! missing = set(waypoints) - set(hiker.graph.nodes())
     #! if 0 != len(missing):
@@ -626,7 +636,7 @@ def infoShortest(hiker, args):
     #!           total,
     #!           details
     #!       ))
-    shortest(hiker, args.waypoints, camps=camps, verbose=args.details)
+    shortest(hiker, args.waypoint, camps=camps, verbose=args.details)
                 
 def infoTrailheads(hiker, args):
     print('Trail-heads:\n  {}'.format('\n  '.join(hiker.trailheads)))
@@ -646,7 +656,8 @@ def main():
     subparsers = parser.add_subparsers(title='subcommands',
                                        help='sub-command help')
 
-    parser.add_argument('--loglevel',      help='Kind of diagnostic output',
+    parser.add_argument('--loglevel',
+                        help='Kind of diagnostic output',
                         choices = ['CRTICAL', 'ERROR', 'WARNING',
                                    'INFO', 'DEBUG'],
                         default='WARNING',
@@ -696,12 +707,11 @@ def main():
                         action='store_true',
                         help='List cummulative distance)')
     pars_s.add_argument('--prefix_camp',
-                        default='Camp Night ',
+                        default='',
                         help=('Prefix camp number with this string when '
                               'outputting details.'))
     pars_s.add_argument('--first_day',
                         help='Date (mm/dd/yyyy) of first day of hiking')
-                              
     pars_s.set_defaults(func=infoShortest)
 
 

@@ -145,27 +145,29 @@ Hits the Colorado - TWICE!
 Includes optional side-hikes to:
 1. Plateau_Point   at Sunset! (day pack)
 2. Granite_Rapids  (camp)
-3. Hermit_Rapids   (with time to relax, day pack)
+3. Hermit_Rapids_BM8   (with time to relax, day pack)
 
 No Plateau sunset. Could do Plateau at end of Day 1 but it would add
 to overall miles and make day one 3 miles longer.
 
 #+BEGIN_SRC sh :session hcenv :exports results :results output
-hc shortest --details -w South_Kaibab_TH -w  Plateau_Point -w Granite_Rapids -w Hermit_Rapids  -w Hermit_TH  \
-  -c Indian_Garden_CG Camp1 -c Horn_Creek Camp2 -c Granite_Rapids Camp3 -c Hermit_Creek Camp4 $DATA
+hc shortest --details -w South_Kaibab_TH -w  Plateau_Point \
+  -w Granite_Rapids_BL8 -w Hermit_Rapids_BM8_BM8  -w Hermit_TH  \
+  -c Indian_Garden_CIG Camp1 -c Horn_Creek Camp2 -c Granite_Rapids_BL8 Camp3 \
+  -c Hermit_Creek_BM7 Camp4 $DATA
 #+END_SRC
 #+RESULTS:
 
 
 *** COMMENT OBSOLETE
-> hc shortest --details -w South_Kaibab_TH -w Indian_Garden_CG -w  Plateau_Point -w Horn_Creek -w Granite_Rapids -w Hermit_Rapids -w Hermit_Creek  -w Hermit_TH  -c Indian_Garden_CG -c Horn_Creek -c Granite_Rapids -c Hermit_Creek $DATA
+> hc shortest --details -w South_Kaibab_TH -w Indian_Garden_CIG -w  Plateau_Point -w Horn_Creek -w Granite_Rapids -w Hermit_Rapids_BM8 -w Hermit_Creek_BM7  -w Hermit_TH  -c Indian_Garden_CIG -c Horn_Creek -c Granite_Rapids -c Hermit_Creek_BM7 $DATA
 
 : The shortest distance from "South_Kaibab_TH" to "Hermit_TH" is 39.0 miles via:
 :     0.0   0.0  South_Kaibab_TH	Start
 :     1.5   1.5  Cedar_Ridge	
 :     1.5   3.0  Skeleton_Point	
 :     1.4   4.4  Tipoff	
-:     4.4   8.8  Indian_Garden_CG	Camp 1
+:     4.4   8.8  Indian_Garden_CIG	Camp 1
 :     0.7   0.7  Plateau_Point_JCT	
 :     0.8   1.5  Plateau_Point	
 :     0.8   2.3  Plateau_Point_JCT	
@@ -175,9 +177,9 @@ hc shortest --details -w South_Kaibab_TH -w  Plateau_Point -w Granite_Rapids -w 
 :     1.3   8.2  Monument_Creek	
 :     1.6   9.8  Granite_Rapids	Camp 3
 :     1.6   1.6  Monument_Creek	
-:     3.5   5.1  Hermit_Creek	Camp 4
-:     1.5   1.5  Hermit_Rapids	
-:     1.5   3.0  Hermit_Creek	Camp 4
+:     3.5   5.1  Hermit_Creek_BM7	Camp 4
+:     1.5   1.5  Hermit_Rapids_BM8	
+:     1.5   3.0  Hermit_Creek_BM7	Camp 4
 :     1.2   1.2  Tonto_JCT	
 :     7.0   8.2  Hermit_TH	DONE
 
@@ -188,7 +190,7 @@ Plateau_Point at sunset (day pack).
 - No River.
 
 #+BEGIN_SRC sh :session hcenv :exports results :results output
-hc shortest --details -w Bright_Angel_TH -w Plateau_Point -w Indian_Garden_CG -w Hermit_TH -c Indian_Garden_CG Camp1 -c Monument_Creek Camp2 $DATA
+hc shortest --details -w Bright_Angel_TH -w Plateau_Point -w Indian_Garden_CIG -w Hermit_TH -c Indian_Garden_CIG Camp1 -c Monument_Creek Camp2 $DATA
 #+END_SRC
 #+RESULTS:
 
@@ -201,7 +203,7 @@ Could do Plateau at end of Day 1 but it would add
 to overall miles and make day one 3 miles longer.
 
 #+BEGIN_SRC sh :session hcenv :exports results :results output
-hc shortest --details -w South_Kaibab_TH -w Indian_Garden_CG -w  Plateau_Point -w Hermit_TH  -c Indian_Garden_CG Camp1 -c Monument_Creek Camp2 $DATA
+hc shortest --details -w South_Kaibab_TH -w Indian_Garden_CIG -w  Plateau_Point -w Hermit_TH  -c Indian_Garden_CIG Camp1 -c Monument_Creek_BL7 Camp2 $DATA
 #+END_SRC
 #+RESULTS:
 
@@ -211,8 +213,8 @@ hc shortest --details -w South_Kaibab_TH -w Indian_Garden_CG -w  Plateau_Point -
 - Hits the river once (day pack).
 
 #+BEGIN_SRC sh :session hcenv :exports results :results output
-hc shortest --details -w South_Kaibab_TH -w  Plateau_Point -w Indian_Garden_CG  -w Hermit_Rapids -w Hermit_Creek  -w Hermit_TH  \
- -c Indian_Garden_CG Camp1 -c Horn_Creek Camp2 -c Hermit_Creek Camp3 $DATA
+hc shortest --details -w South_Kaibab_TH -w  Plateau_Point -w Indian_Garden_CIG  -w Hermit_Rapids_BM8 -w Hermit_Creek_BM7  -w Hermit_TH  \
+ -c Indian_Garden_CIG Camp1 -c Horn_Creek Camp2 -c Hermit_Creek_BM7 Camp3 $DATA
 #+END_SRC
 #+RESULTS:
 
