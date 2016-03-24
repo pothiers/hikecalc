@@ -72,13 +72,15 @@ EXAMPLE:
 Display names of all loaded trail-heads.
 SYNTAX: th
 """
-        print('Trail-heads:\n  {}'.format('\n  '.join(self.hiker.trailheads)))
+        names = sorted(self.hiker.trailheads)
+        print('Trail-heads:\n  {}'.format('\n  '.join(names)))
     def do_wp(self, arg):
         """\
 Display names of all loaded waypoints.
 SYNTAX: wp
 """
-        print('Waypoints:\n  {}'.format('\n  '.join(self.hiker.graph.nodes())))
+        names = sorted(self.hiker.graph.nodes())
+        print('Waypoints:\n  {}'.format('\n  '.join(names)))
     def do_dist(self, arg):
         """\
 Display table of distances between all waypoint pairs connected by at

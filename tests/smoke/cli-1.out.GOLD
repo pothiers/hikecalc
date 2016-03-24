@@ -1,0 +1,98 @@
+Welcome to the Hike Calculating Tool.   Type help or ? to list commands .
+
+(hc) File loaded. Use "wp" to get list of waypoints.
+(hc) Waypoints:
+  VentanaTH
+  PalisadesBot
+  SabinoBathroomTop
+  PrisonSaddle
+  PimaCynTH
+  MarshallGulchTH
+  CathedralJct
+  PimaSpring
+  SamaniegoJct
+  CardiacGap
+  CrystalSprBot
+  BridalVeilFalls
+  PalisadesTH
+  RomeroPass
+  PhonelineTH
+  GeronimoMeadow
+  BlackettsTS
+  BoxCampTH
+  PhonelineTE
+  LemmonLookoutTop
+  CathedralSaddle
+  SabinoCynSwim1
+  RomeroPools
+  TrailLinkJct
+  RomeroTH
+  HutchsPool
+  SabinoCyn@EspereroTr
+  BoxCampTE
+  CathedralPeak
+  VentanaRidge
+  Cathedral_route
+  WestForkTE
+  j5
+  Connector2Top
+  PalisadesRangerTH
+  MtLemmonTH
+  PontatocCynTE
+  MontrosePools
+  e4800
+  Bear4720
+  FingerRockTH
+  Connector2Bot
+  TheWindow
+  RomeroLowerJct
+  LemmonPools
+  NovioSpring
+  EastForkTE
+  MtKimbleJct
+  FR1
+  PrisonCampTH
+  GordonHirabayashiTH
+  PalRangJct
+  RattlesnakeJct
+  SutherlandBot
+  LemmonPoolJct
+  ButterflyTH
+  PontatocRidgeTE
+  Tr6Jct
+  e3400
+  CSPEquestrianCenter
+  CrystalSprTop
+  MudSpring
+  BearCynTH
+  SycamoreReservoir
+  BoxSpringTS
+  TrailLink
+  SabinoCynTS
+  BlackettsTE
+  Connector1Top
+  LemmonTrail@WildernessOfRocks
+  MolinoTH
+  LemmonLookoutBot
+  SabinoCyn@RattlesnakeCyn
+  FingerRockSpring
+  WildernessOfRocksJct
+  MaidenPools
+  e8600
+  CathedralRockTS
+  ApacheSpring
+  SabinoRoadTop
+  shortcutToBear
+  SabinoTH
+  SabinoRoad1
+  MarshallSaddle
+  SevenFalls
+  PontatocJct
+  pcJct
+(hc) The shortest distance from "SabinoTH" to "---------" is 7.9 miles via:
+    0.0   0.0   0.0 SabinoTH                   Start
+    3.7   3.7   3.7 SabinoCynTS                
+    2.6   6.3   6.3 BoxCampTE                  
+    1.6   7.9   7.9 HutchsPool                 Done
+    0.0   0.0   7.9 ---------                  ----------
+(hc) Exiting Hike Calculating Tool
