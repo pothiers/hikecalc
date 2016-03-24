@@ -56,17 +56,6 @@ EXAMPLE:
             print(err)
         else:
             print('File loaded. Use "wp" to get list of waypoints.')
-    def do_shortest(self, arg):
-        """\
-Display shortest route that passes through list of waypoints.
-SYNTAX: shortest wpname[.camp1...] ...
-EXAMPLE:
-    load ~/hikecalc/data/catalina.dat
-    shortest SabinoTH HutchsPool
-"""
-        
-        waypoints,camps = self.parse_waypoints(arg)
-        hc.shortest(self.hiker, waypoints, camps=camps, verbose=True)
     def do_th(self, arg):
         """\
 Display names of all loaded trail-heads.
@@ -81,6 +70,17 @@ SYNTAX: wp
 """
         names = sorted(self.hiker.graph.nodes())
         print('Waypoints:\n  {}'.format('\n  '.join(names)))
+    def do_shortest(self, arg):
+        """\
+Display shortest route that passes through list of waypoints.
+SYNTAX: shortest wpname[.camp1...] ...
+EXAMPLE:
+    load ~/hikecalc/data/catalina.dat
+    shortest SabinoTH HutchsPool
+"""
+        
+        waypoints,camps = self.parse_waypoints(arg)
+        hc.shortest(self.hiker, waypoints, camps=camps, verbose=True)
     def do_dist(self, arg):
         """\
 Display table of distances between all waypoint pairs connected by at

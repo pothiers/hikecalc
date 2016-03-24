@@ -10,6 +10,7 @@ cd $dir
 source smoke-lib.sh
 return_code=0
 SMOKEOUT="README-smoke-results.txt"
+CLIOUT="session.in"
 
 ##############################################################################
 #
@@ -29,23 +30,29 @@ echo "Starting tests in \"$dir\" ..."
 echo ""
 echo ""
 
-
-cat > session.in <<EOF
+cat > $CLIOUT <<EOF
+load NO-FILE.dat
 load ~/sandbox/hikecalc/data/catalina.dat
-shortest SabinoTH HutchsPool
 EOF
-testCommand cli1_1 "hikecalc < session.in 2>&1" "^\#" n
+testCommand cli0_1 "hikecalc < $CLIOUT 2>&1" "^\#" n
 
-cat > session.in <<EOF
+cat > $CLIOUT <<EOF
 load ~/sandbox/hikecalc/data/catalina.dat
 th
 EOF
-testCommand cli2_1 "hikecalc < session.in 2>&1" "^\#" n
-cat > session.in <<EOF
+testCommand cli2_1 "hikecalc < $CLIOUT 2>&1" "^\#" n
+
+cat > $CLIOUT <<EOF
 load ~/sandbox/hikecalc/data/catalina.dat
 wp
 EOF
-testCommand cli3_1 "hikecalc < session.in 2>&1" "^\#" n
+testCommand cli3_1 "hikecalc < $CLIOUT 2>&1" "^\#" n
+
+cat > $CLIOUT <<EOF
+load ~/sandbox/hikecalc/data/catalina.dat
+shortest SabinoTH HutchsPool
+EOF
+testCommand cli1_1 "hikecalc < $CLIOUT 2>&1" "^\#" n
 
 
 ###########################################
