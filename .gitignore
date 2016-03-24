@@ -1,6 +1,11 @@
 # smoke tests temp files
 tests/smoke/cli*.out
 tests/smoke/session.in
+tests/smoke/*.clean
+tests/smoke/*.diff
+tests/smoke/dist.out
+tests/smoke/catalina-dist.csv
+
 
 env_hikecalc/
 OBSOLETE/

@@ -11,6 +11,7 @@ source smoke-lib.sh
 return_code=0
 SMOKEOUT="README-smoke-results.txt"
 CLIOUT="session.in"
+DISTOUT="catalina-dist.csv"
 
 ##############################################################################
 #
@@ -53,6 +54,14 @@ load ~/sandbox/hikecalc/data/catalina.dat
 shortest SabinoTH HutchsPool
 EOF
 testCommand cli1_1 "hikecalc < $CLIOUT 2>&1" "^\#" n
+
+cat > $CLIOUT <<EOF
+load ~/sandbox/hikecalc/data/catalina.dat
+dist dist.out
+EOF
+testCommand cli4_1 "hikecalc < $CLIOUT 2>&1" "^\#" n
+sort dist.out > $DISTOUT
+testOutput  cli4_2 $DISTOUT '^\#' n
 
 
 ###########################################
