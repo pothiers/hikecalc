@@ -152,7 +152,7 @@ to overall miles and make day one 3 miles longer.
 
 #+BEGIN_SRC sh :session hcenv :exports results :results output
 hc shortest --details -w South_Kaibab_TH -w  Plateau_Point \
-  -w Granite_Rapids_BL8 -w Hermit_Rapids_BM8_BM8  -w Hermit_TH  \
+  -w Granite_Rapids_BL8 -w Hermit_Rapids_BM8  -w Hermit_TH  \
   -c Indian_Garden_CIG Camp1 -c Horn_Creek Camp2 -c Granite_Rapids_BL8 Camp3 \
   -c Hermit_Creek_BM7 Camp4 $DATA
 #+END_SRC

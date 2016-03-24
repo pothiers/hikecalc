@@ -1,0 +1,19 @@
+# "trail" or "path" format
+#
+# Line starts with NUMBER or WAYPOINT
+# NUMBER:: distance from previous WAYPOINT
+# WAYPOINT:: Unique name (per file). First char is alpha
+# 
+# Each seperated by white space.  
+# Two adjacent WAYPOINTS means break in trail. 
+#
+# Nameing conventions:
+#   TE:: Trail End (opposite of TS)
+#   TS:: Trail Start (opposite of TE); like TH, but less so.
+#   TH:: Trail Head; as given by map where available, else logical start
+#        If you had to walk to get here, its a "TS". 
+#   *Pass, *Cyn, *Spring, *Pools, *Saddle
+#
+#
+KingsCynTH
+WassonPeak

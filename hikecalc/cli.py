@@ -42,26 +42,48 @@ class HikecalcCli(cmd.Cmd):
     ### ----- HikeCalc commands --------
     def do_load(self, arg):
         """\
-        Load datafile.
-        SYNTAX: load filename"""
-        self.hiker.loadData(open(arg), 'path')
-        self.hiker.appendTrailHeadsByPattern()
+Load datafile.
+SYNTAX: load filename
+EXAMPLE:
+    load ~/hikecalc/data/catalina.dat
+"""
+        filename = os.path.expanduser(arg)
+        try:
+            self.hiker.loadData(open(filename), 'path')
+            self.hiker.appendTrailHeadsByPattern()
+        except Exception as err:
+            print('File not loaded')
+            print(err)
+        else:
+            print('File loaded. Use "wp" to get list of waypoints.')
     def do_shortest(self, arg):
-        """Display shortest route that passes through list of waypoints.
-        SYNTAX: shortest wpname[.camp1...] ..."""
+        """\
+Display shortest route that passes through list of waypoints.
+SYNTAX: shortest wpname[.camp1...] ...
+EXAMPLE:
+    load ~/hikecalc/data/catalina.dat
+    shortest SabinoTH HutchsPool
+"""
+        
         waypoints,camps = self.parse_waypoints(arg)
         hc.shortest(self.hiker, waypoints, camps=camps, verbose=True)
     def do_th(self, arg):
-        """Display names of all loaded trail-heads."""
+        """\
+Display names of all loaded trail-heads.
+SYNTAX: th
+"""
         print('Trail-heads:\n  {}'.format('\n  '.join(self.hiker.trailheads)))
     def do_wp(self, arg):
-        """Display names of all loaded waypoints."""
+        """\
+Display names of all loaded waypoints.
+SYNTAX: wp
+"""
         print('Waypoints:\n  {}'.format('\n  '.join(self.hiker.graph.nodes())))
     def do_dist(self, arg):
         """\
-        Display table of distances between all waypoint pairs connected by at
-        least one segment.
-        SYNTAX: dist [CSV_filename]
+Display table of distances between all waypoint pairs connected by at
+least one segment.
+SYNTAX: dist [CSV_filename]
         """
         hc.genTable(self.hiker, None, csvfile=arg)
     def do_quit(self, arg):
