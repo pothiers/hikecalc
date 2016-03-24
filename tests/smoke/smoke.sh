@@ -30,11 +30,22 @@ echo ""
 echo ""
 
 
-#! testCommand conrules1_1 "conrules -p ../python -m jungle-objects.xml jungle.lpc.gz conrules_out.1.lpc.gz 2>&1" "^\#" n
-#! lpc_cat conrules_out.1.lpc.gz > conrules_out.1.lpc.xml
-#! testOutput  conrules1_2 conrules_out.lpc.xml "^\#" n
+cat > session.in <<EOF
+load ~/sandbox/hikecalc/data/catalina.dat
+shortest SabinoTH HutchsPool
+EOF
+testCommand cli1_1 "hikecalc < session.in 2>&1" "^\#" n
 
-testCommand cli1_1 "./cli-1.sh 2>&1" "^\#" n
+cat > session.in <<EOF
+load ~/sandbox/hikecalc/data/catalina.dat
+th
+EOF
+testCommand cli2_1 "hikecalc < session.in 2>&1" "^\#" n
+cat > session.in <<EOF
+load ~/sandbox/hikecalc/data/catalina.dat
+wp
+EOF
+testCommand cli3_1 "hikecalc < session.in 2>&1" "^\#" n
 
 
 ###########################################

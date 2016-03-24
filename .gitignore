@@ -1,3 +1,7 @@
+# smoke tests temp files
+tests/smoke/cli*.out
+tests/smoke/session.in
+
 env_hikecalc/
 OBSOLETE/
 hc_env/
