@@ -1,6 +1,6 @@
 Welcome to the Hike Calculating Tool.   Type help or ? to list commands .
 
-(hc) File loaded. Use "wp" to get list of waypoints.
+(hc) File loaded. Use "th" for list of trail-heads, "wp" for waypoints.
 (hc) The shortest distance from "SabinoTH" to "---------" is 7.9 miles via:
     0.0   0.0   0.0 SabinoTH                   Start
     3.7   3.7   3.7 SabinoCynTS                

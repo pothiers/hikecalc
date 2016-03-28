@@ -2,5 +2,5 @@ Welcome to the Hike Calculating Tool.   Type help or ? to list commands .
 
 (hc) File not loaded
 [Errno 2] No such file or directory: 'NO-FILE.dat'
-(hc) File loaded. Use "wp" to get list of waypoints.
+(hc) File loaded. Use "th" for list of trail-heads, "wp" for waypoints.
 (hc) Exiting Hike Calculating Tool

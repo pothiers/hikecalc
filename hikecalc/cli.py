@@ -1,10 +1,14 @@
 #! /usr/bin/env python
 """\
 
-Command Line Interpreter for Hike Calculator.  This is user-friendly
-way to access HC.  Easier implementation and installation than using
-webservice.  Easier for users than free-form use via many invocations
-of the HC with different options.
+Command Line Interpreter (CLI) for Hike Calculator.  This is
+user-friendly way to access HC.  Easier implementation and
+installation than using webservice.  Easier for users than free-form
+use via many invocations of the HC with different options.
+
+The commands provided by the CLI should provide all the functionality
+that is available via command line arguments of hike_calc.py.
+Probably more. Roughly: hike_calc subparser => CLI command.
 
 """
 
@@ -38,6 +42,29 @@ class HikecalcCli(cmd.Cmd):
         waypoints = [wp.split('.')[0] for wp in wps]
         return waypoints, camps
 
+    def parse_shortest(self, arg):
+        parser = argparse.ArgumentParser(prog='shorest')
+        parser.add_argument('-w', '--waypoint',
+                            action='append',
+                            help='Waypoint to include. (multi allowed)')
+        parser.add_argument('-c', '--camp',
+                            nargs=2,
+                            action='append',
+                            help=('(waypoint night-number) of camp. Reset '
+                                  'distance. (multi allowed)'))
+        parser.add_argument('--details', 
+                            action='store_true',
+                            help='List cummulative distance)')
+        parser.add_argument('--prefix_camp',
+                            default='',
+                            help=('Prefix camp number with this string when '
+                                  'outputting details.'))
+        parser.add_argument('--first_day',
+                            help='Date (mm/dd/yyyy) of first day of hiking')
+        parser.set_defaults(func=infoShortest)
+        args = parser.parse_args(arg.split())
+        return args
+
     ############################################################################
     ### ----- HikeCalc commands --------
     def do_load(self, arg):
@@ -55,7 +82,8 @@ EXAMPLE:
             print('File not loaded')
             print(err)
         else:
-            print('File loaded. Use "wp" to get list of waypoints.')
+            print('File loaded. Use "th" for list of trail-heads, '
+                  '"wp" for waypoints.')
     def do_th(self, arg):
         """\
 Display names of all loaded trail-heads.

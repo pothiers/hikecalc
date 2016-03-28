@@ -12,8 +12,15 @@
 #   TS:: Trail Start (opposite of TE); like TH, but less so.
 #   TH:: Trail Head; as given by map where available, else logical start
 #        If you had to walk to get here, its a "TS". 
-#   *Pass, *Cyn, *Spring, *Pools, *Saddle
+#   *Pass, *Cyn, *Spring, *Pools, *Saddle, *Jct
 #
 #
-KingsCynTH
-WassonPeak
+KingsCynTH 1.0 Mamagah 1.7 e3840Saddle 0.9 e4480Jct 0.3 WassonPeak
+KingsCynTH 1.1 e3120Jct 1.0 e3520Jct 1.9 e4480Jct
+e3120Jct 0.4 Mamagah
+
+e3520Jct 1.0 DobeWashJct 0.7 SenderoEsperanzaTH
+
+e3840Saddle 3.3 CaminoDelCerroTH 1.7 ThundBritJct 0.6 CactusCynJct 0.6 CoyotePass 0.8 CoyoteCactus
+
+
