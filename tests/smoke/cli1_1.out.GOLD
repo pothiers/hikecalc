@@ -1,10 +1,9 @@
 Welcome to the Hike Calculating Tool.   Type help or ? to list commands .
 
 (hc) File loaded. Use "th" for list of trail-heads, "wp" for waypoints.
-(hc) The shortest distance from "SabinoTH" to "---------" is 7.9 miles via:
+(hc) The shortest distance from "SabinoTH" to "HutchsPool" is 7.9 miles via:
     0.0   0.0   0.0 SabinoTH                   Start
     3.7   3.7   3.7 SabinoCynTS                
     2.6   6.3   6.3 BoxCampTE                  
     1.6   7.9   7.9 HutchsPool                 Done
-    0.0   0.0   7.9 ---------                  ----------
 (hc) Exiting Hike Calculating Tool

@@ -1,10 +1,11 @@
 #! /usr/bin/env python
 """\
 
-Command Line Interpreter (CLI) for Hike Calculator.  This is
-user-friendly way to access HC.  Easier implementation and
-installation than using webservice.  Easier for users than free-form
-use via many invocations of the HC with different options.
+Command Line Interpreter (CLI) for Hike Calculator. Balance between
+full web app and multiple invocations of script. This is user-friendly
+way to access HC.  Easier implementation and installation than using
+webservice.  Easier for users than free-form use via many invocations
+of the HC with different options.
 
 The commands provided by the CLI should provide all the functionality
 that is available via command line arguments of hike_calc.py.
@@ -61,9 +62,7 @@ class HikecalcCli(cmd.Cmd):
                                   'outputting details.'))
         parser.add_argument('--first_day',
                             help='Date (mm/dd/yyyy) of first day of hiking')
-        parser.set_defaults(func=infoShortest)
-        args = parser.parse_args(arg.split())
-        return args
+        return parser.parse_args(arg.split())
 
     ############################################################################
     ### ----- HikeCalc commands --------
@@ -107,8 +106,11 @@ EXAMPLE:
     shortest SabinoTH HutchsPool
 """
         
-        waypoints,camps = self.parse_waypoints(arg)
-        hc.shortest(self.hiker, waypoints, camps=camps, verbose=True)
+        #waypoints,camps = self.parse_waypoints(arg)
+        #hc.shortest(self.hiker, waypoints, camps=camps, verbose=True)
+        args = self.parse_shortest(arg)
+        hc.shortest(self.hiker, args.waypoint, camps=args.camp,
+                    verbose=args.details)
     def do_dist(self, arg):
         """\
 Display table of distances between all waypoint pairs connected by at
