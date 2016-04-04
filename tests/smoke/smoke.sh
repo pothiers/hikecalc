@@ -37,9 +37,14 @@ wp
 EOF
 testCommand cli3_1 "hikecalc < $CLIOUT 2>&1" "^\#" n
 
+#!cat > $CLIOUT <<EOF
+#!load ~/sandbox/hikecalc/data/catalina.dat
+#!shortest SabinoTH HutchsPool
+#!EOF
+#!testCommand cli1_1 "hikecalc < $CLIOUT 2>&1" "^\#" n
 cat > $CLIOUT <<EOF
 load ~/sandbox/hikecalc/data/catalina.dat
-shortest SabinoTH HutchsPool
+shortest --details -w SabinoTH -w HutchsPool
 EOF
 testCommand cli1_1 "hikecalc < $CLIOUT 2>&1" "^\#" n
 
