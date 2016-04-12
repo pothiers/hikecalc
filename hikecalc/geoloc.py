@@ -1,15 +1,8 @@
-#! /usr/bin/env python
-## @package pyexample
-#  Documentation for this module. (for DOXYGEN)
-#
-#  More details.
-
+#! /usr/bin/env python3
 '''\
-<<Python script callable from command line.  Put description here.>>
+Get addresses for a GPX segment.
 '''
-
-import os, sys, string, argparse, logging
-import csv
+import sys, argparse, logging
 from geopy.geocoders import Nominatim
 import xml.etree.ElementTree as ET
 
@@ -119,7 +112,7 @@ def main():
         adrs.update(new)
         
     print('Unique address found in files: {}'
-          .format('\n\t '.join(sorted(list(addresses)))))
+          .format('\n\t '.join(sorted(list(adrs)))))
 
 
 if __name__ == '__main__':
