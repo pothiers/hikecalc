@@ -8,13 +8,13 @@ import sys
 modified = re.compile('^[MA]\s+(?P<name>.*)$')
 
 CHECKS = [
-#!    {
-#!        'output': 'Checking puppet syntax...',
-#!        'command': 'puppet parser validate %s',
-#!        'match_files': ['.*\.pp$'],
-#!        'ignore_files': ['.*pre-commit'],
-#!        'print_filename': True,
-#!    },
+    #    {
+    #        'output': 'Checking puppet syntax...',
+    #        'command': 'puppet parser validate %s',
+    #        'match_files': ['.*\.pp$'],
+    #        'ignore_files': ['.*pre-commit'],
+    #        'print_filename': True,
+    #    },
     {
         'output': 'Checking for pdbs...',
         'command': 'grep -n "import pdb" %s',
@@ -27,32 +27,32 @@ CHECKS = [
         'ignore_files': ['.*pre-commit'],
         'print_filename': True,
     },
-#!    {
-#!        'output': 'Checking for print statements...',
-#!        'command': 'grep -n print %s',
-#!        'match_files': ['.*\.py$'],
-#!        'ignore_files': ['.*migrations.*', '.*management/commands.*', '.*manage.py', '.*/scripts/.*'],
-#!        'print_filename': True,
-#!    },
-#!    {
-#!        'output': 'Checking for console.log()...',
-#!        'command': 'grep -n console.log %s',
-#!        'match_files': ['.*yipit/.*\.js$'],
-#!        'print_filename': True,
-#!    },
-#!    {
-#!        'output': 'Checking for debugger...',
-#!        'command': 'grep -n debugger %s',
-#!        'match_files': ['.*\.js$'],
-#!        'print_filename': True,
-#!    },
-#!    {
-#!       'output': 'Running Jshint...',
-#!       # By default, jshint prints 'Lint Free!' upon success. We want to filter this out.
-#!       'command': 'jshint %s | grep -v "Lint Free!"',
-#!       'match_files': ['.*yipit/.*\.js$'],
-#!       'print_filename': False,
-#!    },
+    #    {
+    #        'output': 'Checking for print statements...',
+    #        'command': 'grep -n print %s',
+    #        'match_files': ['.*\.py$'],
+    #        'ignore_files': ['.*migrations.*', '.*management/commands.*', '.*manage.py', '.*/scripts/.*'],
+    #        'print_filename': True,
+    #    },
+    #    {
+    #        'output': 'Checking for console.log()...',
+    #        'command': 'grep -n console.log %s',
+    #        'match_files': ['.*yipit/.*\.js$'],
+    #        'print_filename': True,
+    #    },
+    #    {
+    #        'output': 'Checking for debugger...',
+    #        'command': 'grep -n debugger %s',
+    #        'match_files': ['.*\.js$'],
+    #        'print_filename': True,
+    #    },
+    #    {
+    #       'output': 'Running Jshint...',
+    #       # By default, jshint prints 'Lint Free!' upon success. We want to filter this out.
+    #       'command': 'jshint %s | grep -v "Lint Free!"',
+    #       'match_files': ['.*yipit/.*\.js$'],
+    #       'print_filename': False,
+    #    },
     {
         'output': 'Running Pyflakes...',
         'command': 'pyflakes %s',
@@ -60,13 +60,13 @@ CHECKS = [
         'ignore_files': ['.*settings/.*', '.*manage.py', '.*migrations.*', '.*/terrain/.*'],
         'print_filename': False,
     },
-#!    {
-#!        'output': 'Running pep8...',
-#!        'command': 'pep8 -r --ignore=E501,W293 %s',
-#!        'match_files': ['.*\.py$'],
-#!        'ignore_files': ['.*migrations.*'],
-#!        'print_filename': False,
-#!    },
+    {
+        'output': 'Running pep8...',
+        'command': 'pep8 -r --ignore=E501,W293 %s',
+        'match_files': ['.*\.py$'],
+        'ignore_files': ['.*migrations.*'],
+        'print_filename': False,
+    },
 ]
 
 
@@ -78,8 +78,8 @@ def check_files(files, check):
     result = 0
     print(check['output'])
     for file_name in files:
-        if not 'match_files' in check or matches_file(file_name, check['match_files']):
-            if not 'ignore_files' in check or not matches_file(file_name, check['ignore_files']):
+        if 'match_files' not in check or matches_file(file_name, check['match_files']):
+            if 'ignore_files' not in check or not matches_file(file_name, check['ignore_files']):
                 process = subprocess.Popen(check['command'] % file_name, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
                 out, err = process.communicate()
                 if out or err:
@@ -115,9 +115,9 @@ def main(all_files):
     result = 0
 
     # Django specific
-    #!print 'Running Django Code Validator...'
-    #!return_code = subprocess.call('$VIRTUAL_ENV/bin/python manage.py validate', shell=True)
-    #!result = return_code or result
+    # #!print 'Running Django Code Validator...'
+    # #!return_code = subprocess.call('$VIRTUAL_ENV/bin/python manage.py validate', shell=True)
+    # #!result = return_code or result
     
     for check in CHECKS:
         result = check_files(files, check) or result
