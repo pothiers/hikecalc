@@ -17,15 +17,11 @@ Probably more. Roughly: hike_calc subparser => CLI command.
 import sys
 import argparse
 import logging
-import subprocess
 import cmd
-import readline
 import os.path
-import shutil
-import socket
-from pathlib import PurePath
 
 from . import hike_calc as hc
+
 
 class HikecalcCli(cmd.Cmd):
     "Command Line Interpreter for Hike Calculator"
@@ -44,7 +40,7 @@ class HikecalcCli(cmd.Cmd):
         return waypoints, camps
 
     def parse_shortest(self, arg):
-        parser = argparse.ArgumentParser(prog='shorest')
+        parser = argparse.ArgumentParser(prog='shortest')
         parser.add_argument('-w', '--waypoint',
                             action='append',
                             help='Waypoint to include. (multi allowed)')
@@ -64,19 +60,41 @@ class HikecalcCli(cmd.Cmd):
                             help='Date (mm/dd/yyyy) of first day of hiking')
         return parser.parse_args(arg.split())
 
+    def parse_load(self, arg):
+        parser = argparse.ArgumentParser(prog='load')
+        parser.add_argument('datafile',  help='Input data file')
+        parser.add_argument('-f', '--format',
+                            choices = ['csv', 'path', 'yaml'],
+                            default='path',
+                            help='Data format'
+                            )
+        return parser.parse_args(arg.split())
+
+    def argparse_help(self, parser):
+        try:
+            print(parser('-h'))
+        except SystemExit:
+            pass
+    
     ############################################################################
     ### ----- HikeCalc commands --------
+    def help_load(self):
+        self.argparse_help(self.parse_load)
     def do_load(self, arg):
         """\
 Load datafile.
-SYNTAX: load filename
+SYNTAX: load [options] filename 
+OPTIONS:
+ format::
 EXAMPLE:
-    load ~/hikecalc/data/catalina.dat
+    load ~/sandbox/hikecalc/data/catalina.dat
 """
-        filename = os.path.expanduser(arg)
+        args = self.parse_load(arg)
         try:
-            self.hiker.loadData(open(filename), 'path')
-            self.hiker.appendTrailHeadsByPattern()
+            self.hiker.loadData(open(os.path.expanduser(args.datafile)),
+                                args.format)
+            if args.format != 'yaml':
+                self.hiker.appendTrailHeadsByPattern()
         except Exception as err:
             print('File not loaded')
             print(err)
@@ -97,6 +115,8 @@ SYNTAX: wp
 """
         names = sorted(self.hiker.graph.nodes())
         print('Waypoints:\n  {}'.format('\n  '.join(names)))
+    def help_shortest(self):
+        self.argparse_help(self.parse_shortest)
     def do_shortest(self, arg):
         """\
 Display shortest route that passes through list of waypoints.

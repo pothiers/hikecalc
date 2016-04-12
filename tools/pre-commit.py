@@ -60,13 +60,13 @@ CHECKS = [
         'ignore_files': ['.*settings/.*', '.*manage.py', '.*migrations.*', '.*/terrain/.*'],
         'print_filename': False,
     },
-    {
-        'output': 'Running pep8...',
-        'command': 'pep8 -r --ignore=E501,W293 %s',
-        'match_files': ['.*\.py$'],
-        'ignore_files': ['.*migrations.*'],
-        'print_filename': False,
-    },
+    # {
+    #     'output': 'Running pep8...',
+    #     'command': 'pep8 -r --ignore=E501,W293 %s',
+    #     'match_files': ['.*\.py$'],
+    #     'ignore_files': ['.*migrations.*'],
+    #     'print_filename': False,
+    # },
 ]
 
 

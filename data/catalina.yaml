@@ -30,6 +30,24 @@ Aliases:
 Long-names:
   SabinoTH: Sabino Visitors Center
 
+Tail-heads:  
+- BearCynTH
+- BoxCampTH
+- ButterflyTH
+- FingerRockTH
+- GordonHirabayashiTH
+- MarshallGulchTH
+- MolinoTH
+- MtLemmonTH
+- PalisadesRangerTH
+- PalisadesTH
+- PhonelineTH
+- PimaCynTH
+- PrisonCampTH
+- RomeroTH
+- SabinoTH
+- VentanaTH
+  
 Paths:
 - FingerRockTH 0.7 PontatocJct  1.8 PontatocRidgeTE
 - PontatocJct  3.0 PontatocCynTE
