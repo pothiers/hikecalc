@@ -27,24 +27,24 @@ plt.savefig("catalina-dist.png")
 
 '''
 
-import os, sys, string, argparse, logging
-import sys,itertools
+import sys, argparse, logging
+import itertools
 from pprint import pprint
-import difflib
+#!import difflib
 from xml.etree.ElementTree import ElementTree
 import re
-import collections
 import csv
 import sqlite3
+import yaml
+#!import datetime
 
-import collections
-import networkx.drawing
+#!import collections
+#!import networkx.drawing
 import networkx as nx
 import networkx.algorithms.isomorphism.isomorphvf2 as vf2
-from decimal import *
+#from decimal import *
 
-mileContext = Context(prec=1, rounding=ROUND_HALF_DOWN, 
-                      Emin=0, Emax=9999)
+#mileContext = Context(prec=1, rounding=ROUND_HALF_DOWN,  Emin=0, Emax=9999)
 
 
 
@@ -117,9 +117,16 @@ class DistGraphMatcher(vf2.GraphMatcher):
         # That would allow us to require duplicates (and allow slop in value).
         return (set(G2_dist).issubset(G1_dist))
 
+
+def yamlToGraph(yaml_data_file, GRAPH):
+    yd = yaml.safe_load(yaml_data_file)
+    return yd
+    
 # load
 def pathsToGraph(data_file, GRAPH):
-    '''G=nx.Graph()
+    '''
+data_file:: open file (not filename)
+G=nx.Graph()
 hc.pathsToGraph("sabino.txt",G)
 
 Data file can contain e.g.: 
@@ -127,7 +134,7 @@ Data file can contain e.g.:
 String is removed from token stream but saved in association with WP in a LUT.
 '''
     nameLUT = dict() # nameLut[wp] = longName
-    elevLUT = dict() # nameLut[wp] = elevation
+    #!elevLUT = dict() # nameLut[wp] = elevation
 
     # match everything inside parens '()'
     #!name_re = re.compile(r'.+?(\w+)="([\w\s]+)"', flags=re.DEBUG) 
@@ -187,7 +194,7 @@ def graphDistance(graph,  waypoints, camps=None, explain=False):
     breakdown'''
     total = 0
     path = []
-    gn = graph.nodes()
+    #! gn = graph.nodes()
     for (a,b) in zip(waypoints[:-1],waypoints[1:]):
         logging.debug('Calc shortest between: {}  and {}'.format(a,b))
         if nx.has_path(graph, a, b):
@@ -299,6 +306,9 @@ class Hiker(object):
             data_file.close()
             fname = data_file.name
             csv_to_graph(fname, self.graph, csv_lut_file=names)
+        elif format == 'yaml':
+            yd = yaml.safe_load(data_file)
+            print('yd={}'.format(yd))
         else:
             logging.error('Unknown data file format ("{}"} requested.'
                           .format(format))
@@ -439,7 +449,7 @@ class Hiker(object):
         pass
 
 
-def test():
+def test(G):
     pprint(G.edges(data=True))
     #print(nx.dijkstra_path(G,'fingerTH','ventanaTH'))
     print((nx.shortest_path(G,'fingerTH','ventanaTH','dist')))
@@ -459,17 +469,18 @@ def distance(G, *waypoints):
     return total
     
 def OLDreadKmlWaypoints(G, kmlfile):
-    tree = xml.ElementTree()
+    import xml.etree
+    tree = xml.etree.ElementTree()
     tree.parse("/home/pothiers/src/python/waypoints.kml")
     #placemarks=tree.findall('.//{http://www.opengis.net/kml/2.2}Placemark')
     #wpName = placemarks[0].find('{http://www.opengis.net/kml/2.2}name').text
-    wpNames = [e.text for e in tree.findall('.//{http://www.opengis.net/kml/2.2}Placemark/{http://www.opengis.net/kml/2.2}name')]
-    lut = dict(list(zip(wpNames,list(range(len(wpNames))))))
-    lutInv = dict(list(zip(list(lut.values()),list(lut.keys()))))
+    #!wpNames = [e.text for e in tree.findall('.//{http://www.opengis.net/kml/2.2}Placemark/{http://www.opengis.net/kml/2.2}name')]
+    #!lut = dict(list(zip(wpNames,list(range(len(wpNames))))))
+    #!lutInv = dict(list(zip(list(lut.values()),list(lut.keys()))))
 
 def isFloat(string):
     try:
-        f = float(string)
+        float(string)
     except Exception:
         return False
     return True
@@ -601,9 +612,9 @@ def shortest(hiker, waypoints,
 def infoShortest(hiker, args):
     if args.first_day:
         d,m,y = [int(n) for n in args.first_day.split('/')]
-        firstday =  date(y,m,d)
+        #!firstday =  datetime.date(y,m,d)
 
-    waypoints = args.waypoint
+    #!waypoints = args.waypoint
     if args.camp:
         #pfx = args.prefix_camp if args.prefix_camp else 'Night '
         pfx = args.prefix_camp if args.prefix_camp else ''
@@ -746,3 +757,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+    

@@ -49,7 +49,7 @@ class HikecalcCli(cmd.Cmd):
                             action='append',
                             help=('(waypoint night-number) of camp. Reset '
                                   'distance. (multi allowed)'))
-        parser.add_argument('--details', 
+        parser.add_argument('--details',
                             action='store_true',
                             help='List cummulative distance)')
         parser.add_argument('--prefix_camp',
@@ -62,9 +62,9 @@ class HikecalcCli(cmd.Cmd):
 
     def parse_load(self, arg):
         parser = argparse.ArgumentParser(prog='load')
-        parser.add_argument('datafile',  help='Input data file')
+        parser.add_argument('datafile', help='Input data file')
         parser.add_argument('-f', '--format',
-                            choices = ['csv', 'path', 'yaml'],
+                            choices=['csv', 'path', 'yaml'],
                             default='path',
                             help='Data format'
                             )
@@ -76,7 +76,7 @@ class HikecalcCli(cmd.Cmd):
         except SystemExit:
             pass
     
-    ############################################################################
+    ###########################################################################
     ### ----- HikeCalc commands --------
     def help_load(self):
         self.argparse_help(self.parse_load)

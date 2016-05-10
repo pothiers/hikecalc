@@ -1,0 +1,368 @@
+!!python/object:networkx.classes.graph.Graph
+adj: &id094
+  ApacheSpring:
+    BoxCampTE: &id002 {dist: 2.3}
+    BoxSpringTS: &id003 {dist: 3.0}
+  Bear4720:
+    PrisonSaddle: &id045 {dist: 0.5}
+    SevenFalls: &id066 {dist: 3.9}
+    shortcutToBear: &id092 {dist: 0.6}
+  BearCynTH:
+    PhonelineTH: &id036 {dist: 0.9}
+    SevenFalls: &id067 {dist: 2.2}
+  BlackettsTE:
+    BlackettsTS: &id001 {dist: 1.7}
+  BlackettsTS:
+    BlackettsTE: *id001
+    Connector1Top: &id010 {dist: 0.4}
+    PhonelineTH: &id037 {dist: 0.6}
+  BoxCampTE:
+    ApacheSpring: *id002
+    HutchsPool: &id019 {dist: 1.6}
+    PalisadesBot: &id030 {dist: 1.1}
+    SabinoCynTS: &id057 {dist: 2.6}
+  BoxCampTH:
+    BoxSpringTS: &id004 {dist: 1.8}
+  BoxSpringTS:
+    ApacheSpring: *id003
+    BoxCampTH: *id004
+  BridalVeilFalls:
+    CathedralJct: &id005 {dist: 0.9}
+    CathedralRockTS: &id006 {dist: 0.9}
+    GeronimoMeadow: &id017 {dist: 1.3}
+  ButterflyTH:
+    CrystalSprTop: &id013 {dist: 1.4}
+  CSPEquestrianCenter:
+    TrailLink: &id072 {dist: 2.6}
+  CardiacGap:
+    GeronimoMeadow: &id018 {dist: 1.2}
+    RattlesnakeJct: &id047 {dist: 2.4}
+  CathedralJct:
+    BridalVeilFalls: *id005
+    Cathedral_route: &id009 {dist: 1.1}
+    TheWindow: &id070 {dist: 2.0}
+  CathedralPeak:
+    CathedralSaddle: &id007 {dist: 0.9}
+  CathedralRockTS:
+    BridalVeilFalls: *id006
+    CathedralSaddle: &id008 {dist: 1.1}
+  CathedralSaddle:
+    CathedralPeak: *id007
+    CathedralRockTS: *id008
+    WestForkTE: &id078 {dist: 1.9}
+  Cathedral_route:
+    CathedralJct: *id009
+    WestForkTE: &id079 {dist: 1.9}
+  Connector1Top:
+    BlackettsTS: *id010
+    Connector2Top: &id011 {dist: 2.4}
+  Connector2Bot:
+    Connector2Top: &id012 {dist: 0.6}
+    SabinoBathroomTop: &id054 {dist: 0.2}
+  Connector2Top:
+    Connector1Top: *id011
+    Connector2Bot: *id012
+    PhonelineTE: &id035 {dist: 0.8}
+  CrystalSprBot:
+    CrystalSprTop: &id014 {dist: 3.6}
+  CrystalSprTop:
+    ButterflyTH: *id013
+    CrystalSprBot: *id014
+    NovioSpring: &id028 {dist: 1.8}
+  EastForkTE:
+    PalisadesBot: &id031 {dist: 1.0}
+    PrisonSaddle: &id046 {dist: 1.0}
+  FR1:
+    FingerRockSpring: &id015 {dist: 3.5}
+    MtKimbleJct: &id026 {dist: 0.5}
+    VentanaRidge: &id074 {dist: 2.0}
+  FingerRockSpring:
+    FR1: *id015
+    FingerRockTH: &id016 {dist: 1.1}
+  FingerRockTH:
+    FingerRockSpring: *id016
+    PontatocJct: &id040 {dist: 0.7}
+  GeronimoMeadow:
+    BridalVeilFalls: *id017
+    CardiacGap: *id018
+  GordonHirabayashiTH:
+    PrisonCampTH: &id043 {dist: 0.0}
+  HutchsPool:
+    BoxCampTE: *id019
+    WestForkTE: &id080 {dist: 3.4}
+  LemmonLookoutBot:
+    LemmonLookoutTop: &id020 {dist: 2.0}
+    LemmonPoolJct: &id021 {dist: 0.8}
+    MarshallSaddle: &id024 {dist: 1.7}
+  LemmonLookoutTop:
+    LemmonLookoutBot: *id020
+    MtLemmonTH: &id027 {dist: 0.4}
+  LemmonPoolJct:
+    LemmonLookoutBot: *id021
+    LemmonPools: &id022 {dist: 0.3}
+    LemmonTrail@WildernessOfRocks: &id023 {dist: 1.5}
+  LemmonPools:
+    LemmonPoolJct: *id022
+  LemmonTrail@WildernessOfRocks:
+    LemmonPoolJct: *id023
+    RomeroPass: &id049 {dist: 1.9}
+    Tr6Jct: &id071 {dist: 2.5}
+  MaidenPools:
+    VentanaRidge: &id075 {dist: 2.8}
+    VentanaTH: &id077 {dist: 2.6}
+  MarshallGulchTH:
+    MarshallSaddle: &id025 {dist: 1.2}
+  MarshallSaddle:
+    LemmonLookoutBot: *id024
+    MarshallGulchTH: *id025
+  MolinoTH:
+    PrisonCampTH: &id044 {dist: 0.6}
+  MontrosePools:
+    RomeroLowerJct: &id048 {dist: 0.5}
+    RomeroPools: &id050 {dist: 1.7}
+    RomeroTH: &id052 {dist: 1.1}
+  MtKimbleJct:
+    FR1: *id026
+    PimaSpring: &id038 {dist: 1.5}
+  MtLemmonTH:
+    LemmonLookoutTop: *id027
+    j5: &id088 {dist: 0.8}
+  MudSpring:
+    PalisadesBot: &id032 {dist: 4.0}
+    PalisadesTH: &id034 {dist: 3.1}
+  NovioSpring:
+    CrystalSprTop: *id028
+    PalRangJct: &id029 {dist: 2.0}
+  PalRangJct:
+    NovioSpring: *id029
+    PalisadesRangerTH: &id033 {dist: 0.5}
+  PalisadesBot:
+    BoxCampTE: *id030
+    EastForkTE: *id031
+    MudSpring: *id032
+  PalisadesRangerTH:
+    PalRangJct: *id033
+  PalisadesTH:
+    MudSpring: *id034
+  PhonelineTE:
+    Connector2Top: *id035
+    SabinoRoadTop: &id059 {dist: 0.5}
+  PhonelineTH:
+    BearCynTH: *id036
+    BlackettsTS: *id037
+    SabinoTH: &id061 {dist: 0.8}
+  PimaCynTH:
+    PimaSpring: &id039 {dist: 5.7}
+  PimaSpring:
+    MtKimbleJct: *id038
+    PimaCynTH: *id039
+  PontatocCynTE:
+    PontatocJct: &id041 {dist: 3.0}
+  PontatocJct:
+    FingerRockTH: *id040
+    PontatocCynTE: *id041
+    PontatocRidgeTE: &id042 {dist: 1.8}
+  PontatocRidgeTE:
+    PontatocJct: *id042
+  PrisonCampTH:
+    GordonHirabayashiTH: *id043
+    MolinoTH: *id044
+    pcJct: &id090 {dist: 0.1}
+  PrisonSaddle:
+    Bear4720: *id045
+    EastForkTE: *id046
+  RattlesnakeJct:
+    CardiacGap: *id047
+    SabinoRoad1: &id058 {dist: 0.5}
+  RomeroLowerJct:
+    MontrosePools: *id048
+    RomeroTH: &id053 {dist: 0.6}
+    SutherlandBot: &id068 {dist: 0.9}
+  RomeroPass:
+    LemmonTrail@WildernessOfRocks: *id049
+    RomeroPools: &id051 {dist: 4.4}
+    WestForkTE: &id081 {dist: 1.8}
+    WildernessOfRocksJct: &id082 {dist: 1.9}
+  RomeroPools:
+    MontrosePools: *id050
+    RomeroPass: *id051
+  RomeroTH:
+    MontrosePools: *id052
+    RomeroLowerJct: *id053
+    SutherlandBot: &id069 {dist: 0.8}
+  SabinoBathroomTop:
+    Connector2Bot: *id054
+    SabinoCynSwim1: &id056 {dist: 0.6}
+  SabinoCyn@EspereroTr:
+    SabinoCyn@RattlesnakeCyn: &id055 {dist: 0.6}
+  SabinoCyn@RattlesnakeCyn:
+    SabinoCyn@EspereroTr: *id055
+    SabinoTH: &id062 {dist: 0.5}
+  SabinoCynSwim1:
+    SabinoBathroomTop: *id056
+    SabinoRoadTop: &id060 {dist: 0.2}
+  SabinoCynTS:
+    BoxCampTE: *id057
+    SabinoTH: &id063 {dist: 3.7}
+  SabinoRoad1:
+    RattlesnakeJct: *id058
+    SabinoTH: &id064 {dist: 0.5}
+  SabinoRoadTop:
+    PhonelineTE: *id059
+    SabinoCynSwim1: *id060
+    SabinoTH: &id065 {dist: 3.7}
+  SabinoTH:
+    PhonelineTH: *id061
+    SabinoCyn@RattlesnakeCyn: *id062
+    SabinoCynTS: *id063
+    SabinoRoad1: *id064
+    SabinoRoadTop: *id065
+  SamaniegoJct:
+    e4800: &id084 {dist: 4.3}
+    e8600: &id086 {dist: 0.8}
+  SevenFalls:
+    Bear4720: *id066
+    BearCynTH: *id067
+  SutherlandBot:
+    RomeroLowerJct: *id068
+    RomeroTH: *id069
+    TrailLinkJct: &id073 {dist: 1.8}
+  SycamoreReservoir:
+    pcJct: &id091 {dist: 1.7}
+    shortcutToBear: &id093 {dist: 0.6}
+  TheWindow:
+    CathedralJct: *id070
+    VentanaRidge: &id076 {dist: 1.2}
+  Tr6Jct:
+    LemmonTrail@WildernessOfRocks: *id071
+    j5: &id089 {dist: 0.7}
+  TrailLink:
+    CSPEquestrianCenter: *id072
+    e3400: &id083 {dist: 2.2}
+  TrailLinkJct:
+    SutherlandBot: *id073
+    e4800: &id085 {dist: 2.8}
+  VentanaRidge:
+    FR1: *id074
+    MaidenPools: *id075
+    TheWindow: *id076
+  VentanaTH:
+    MaidenPools: *id077
+  WestForkTE:
+    CathedralSaddle: *id078
+    Cathedral_route: *id079
+    HutchsPool: *id080
+    RomeroPass: *id081
+  WildernessOfRocksJct:
+    RomeroPass: *id082
+    e8600: &id087 {dist: 2.4}
+  e3400:
+    TrailLink: *id083
+  e4800:
+    SamaniegoJct: *id084
+    TrailLinkJct: *id085
+  e8600:
+    SamaniegoJct: *id086
+    WildernessOfRocksJct: *id087
+  j5:
+    MtLemmonTH: *id088
+    Tr6Jct: *id089
+  pcJct:
+    PrisonCampTH: *id090
+    SycamoreReservoir: *id091
+  shortcutToBear:
+    Bear4720: *id092
+    SycamoreReservoir: *id093
+adjlist_dict_factory: &id095 !!python/name:builtins.dict ''
+edge: *id094
+edge_attr_dict_factory: *id095
+graph: {}
+node:
+  ApacheSpring: {long_name: ''}
+  Bear4720: {long_name: ''}
+  BearCynTH: {long_name: ''}
+  BlackettsTE: {long_name: ''}
+  BlackettsTS: {long_name: ''}
+  BoxCampTE: {long_name: ''}
+  BoxCampTH: {long_name: ''}
+  BoxSpringTS: {long_name: ''}
+  BridalVeilFalls: {long_name: ''}
+  ButterflyTH: {long_name: ''}
+  CSPEquestrianCenter: {long_name: ''}
+  CardiacGap: {long_name: ''}
+  CathedralJct: {long_name: ''}
+  CathedralPeak: {long_name: ''}
+  CathedralRockTS: {long_name: ''}
+  CathedralSaddle: {long_name: ''}
+  Cathedral_route: {long_name: ''}
+  Connector1Top: {long_name: ''}
+  Connector2Bot: {long_name: ''}
+  Connector2Top: {long_name: ''}
+  CrystalSprBot: {long_name: ''}
+  CrystalSprTop: {long_name: ''}
+  EastForkTE: {long_name: ''}
+  FR1: {long_name: ''}
+  FingerRockSpring: {long_name: ''}
+  FingerRockTH: {long_name: ''}
+  GeronimoMeadow: {long_name: ''}
+  GordonHirabayashiTH: {long_name: ''}
+  HutchsPool: {long_name: ''}
+  LemmonLookoutBot: {long_name: ''}
+  LemmonLookoutTop: {long_name: ''}
+  LemmonPoolJct: {long_name: ''}
+  LemmonPools: {long_name: ''}
+  LemmonTrail@WildernessOfRocks: {long_name: ''}
+  MaidenPools: {long_name: ''}
+  MarshallGulchTH: {long_name: ''}
+  MarshallSaddle: {long_name: ''}
+  MolinoTH: {long_name: ''}
+  MontrosePools: {long_name: ''}
+  MtKimbleJct: {long_name: ''}
+  MtLemmonTH: {long_name: ''}
+  MudSpring: {long_name: ''}
+  NovioSpring: {long_name: ''}
+  PalRangJct: {long_name: ''}
+  PalisadesBot: {long_name: ''}
+  PalisadesRangerTH: {long_name: ''}
+  PalisadesTH: {long_name: ''}
+  PhonelineTE: {long_name: ''}
+  PhonelineTH: {long_name: ''}
+  PimaCynTH: {long_name: ''}
+  PimaSpring: {long_name: ''}
+  PontatocCynTE: {long_name: ''}
+  PontatocJct: {long_name: ''}
+  PontatocRidgeTE: {long_name: ''}
+  PrisonCampTH: {long_name: ''}
+  PrisonSaddle: {long_name: ''}
+  RattlesnakeJct: {long_name: ''}
+  RomeroLowerJct: {long_name: ''}
+  RomeroPass: {long_name: ''}
+  RomeroPools: {long_name: ''}
+  RomeroTH: {long_name: ''}
+  SabinoBathroomTop: {long_name: ''}
+  SabinoCyn@EspereroTr: {long_name: ''}
+  SabinoCyn@RattlesnakeCyn: {long_name: ''}
+  SabinoCynSwim1: {long_name: ''}
+  SabinoCynTS: {long_name: ''}
+  SabinoRoad1: {long_name: ''}
+  SabinoRoadTop: {long_name: ''}
+  SabinoTH: {long_name: ''}
+  SamaniegoJct: {long_name: ''}
+  SevenFalls: {long_name: ''}
+  SutherlandBot: {long_name: ''}
+  SycamoreReservoir: {long_name: ''}
+  TheWindow: {long_name: ''}
+  Tr6Jct: {long_name: ''}
+  TrailLink: {long_name: ''}
+  TrailLinkJct: {long_name: ''}
+  VentanaRidge: {long_name: ''}
+  VentanaTH: {long_name: ''}
+  WestForkTE: {long_name: ''}
+  WildernessOfRocksJct: {long_name: ''}
+  e3400: {long_name: ''}
+  e4800: {long_name: ''}
+  e8600: {long_name: ''}
+  j5: {long_name: ''}
+  pcJct: {long_name: ''}
+  shortcutToBear: {long_name: ''}
+node_dict_factory: *id095
