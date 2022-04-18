@@ -9,11 +9,11 @@ TODO:
 
 EXAMPLE:
 sqlite3  grand-canyon.db < hikecalc/graph_schema.sql
-hc --format csv -n data/tonto-west.lut.csv --db grand-canyon.db shortest -w Indian_Garden -w Granite_Rapids -w Hermit_Rest_via_Hermit_Trail data/tonto-west.csv 
+hc --format csv -n data/tonto-west.lut.csv --db grand-canyon.db shortest -w Indian_Garden -w Granite_Rapids -w Hermit_Rest_via_Hermit_Trail data/tonto-west.csv
 
-hc --format csv -n data/tonto-west.lut.csv shortest -w Indian_Garden -w Hermit_Rest_via_Hermit_Trail data/tonto-west.csv 
+hc --format csv -n data/tonto-west.lut.csv shortest -w Indian_Garden -w Hermit_Rest_via_Hermit_Trail data/tonto-west.csv
 
-hc --loglevel=DEBUG --format csv -n data/tonto-west.lut.csv shortest -w x1 -w x4 data/tonto-west.csv 
+hc --loglevel=DEBUG --format csv -n data/tonto-west.lut.csv shortest -w x1 -w x4 data/tonto-west.csv
 
 hc --format csv wp  data/tonto-west.csv
 
@@ -59,7 +59,7 @@ def save_graph(G, dbfile):
     cur.executemany('insert into edge values (?,?,?)',edges)
     con.commit()
     con.close()
-    
+
 
 def csv_to_graph(csv_adj_file, G, csv_lut_file=None):
     '''Add nodes and edges to graph using data from CSV file(s).
@@ -97,7 +97,7 @@ csv_lut_file :: Maps ID to NAME.  Nodes in graph take NAME, or ID if
                               .format(node1, node2, edict))
                 G.add_edge(node1, node2, attr_dict=edict)
 
-    
+
 
 # G=nx.Graph()
 # hc.pathsToGraph('sabino.txt',G)
@@ -121,7 +121,7 @@ class DistGraphMatcher(vf2.GraphMatcher):
 def yamlToGraph(yaml_data_file, GRAPH):
     yd = yaml.safe_load(yaml_data_file)
     return yd
-    
+
 # load
 def pathsToGraph(data_file, GRAPH):
     '''
@@ -129,7 +129,7 @@ data_file:: open file (not filename)
 G=nx.Graph()
 hc.pathsToGraph("sabino.txt",G)
 
-Data file can contain e.g.: 
+Data file can contain e.g.:
   SabinoTH="Sabino Visitor Center" 0.8 PhoneLineTH
 String is removed from token stream but saved in association with WP in a LUT.
 '''
@@ -137,8 +137,8 @@ String is removed from token stream but saved in association with WP in a LUT.
     #!elevLUT = dict() # nameLut[wp] = elevation
 
     # match everything inside parens '()'
-    #!name_re = re.compile(r'.+?(\w+)="([\w\s]+)"', flags=re.DEBUG) 
-    name_re = re.compile(r'.*?(\w+)="([\w\s]+)"') 
+    #!name_re = re.compile(r'.+?(\w+)="([\w\s]+)"', flags=re.DEBUG)
+    name_re = re.compile(r'.*?(\w+)="([\w\s]+)"')
 
     # Read Paths
     f = data_file
@@ -185,7 +185,7 @@ String is removed from token stream but saved in association with WP in a LUT.
             prevWP = tok
 
 
-# tuple for running total    
+# tuple for running total
 #!Runtup = collections.namedtuple('Runtup','name,seg,cumm,lname')
 
 def graphDistance(graph,  waypoints, camps=None, explain=False):
@@ -209,8 +209,9 @@ def graphDistance(graph,  waypoints, camps=None, explain=False):
     if explain:
         if not camps:
             camps = dict()
-            
-        lname = graph.node[path[0]].get('long_name',path[0])
+
+        #!lname = graph.node[path[0]].get('long_name',path[0])
+        lname = graph.nodes[path[0]].get('long_name',path[0])
         running = [(path[0], 0, 0, 0, lname, 'Start')] # [runtup, ...]
         dcum = 0
         tcum = 0
@@ -219,7 +220,8 @@ def graphDistance(graph,  waypoints, camps=None, explain=False):
             segdist = graph[path[idx]][path[idx+1]]['dist']
             dcum += segdist
             tcum += segdist
-            lname = graph.node[path[idx+1]].get('long_name',path[idx+1])
+            #!lname = graph.node[path[idx+1]].get('long_name',path[idx+1])
+            lname = graph.nodes[path[idx+1]].get('long_name',path[idx+1])
             comment = camps.get(path[idx+1],'Camp') if path[idx+1] in camps else ''
             if idx == range(len(path)-1)[-1]:
                 comment = 'Done'
@@ -239,11 +241,11 @@ class Hiker(object):
     graph = nx.Graph()
     pathfile = None
     trailheads = []
-    
+
     def __init__(self, graph=None):
         if graph:
             self.graph = graph
-    
+
 
     def readKmlWaypoints(self,kmlfile):
         ns = '{http://www.opengis.net/kml/2.2}'
@@ -319,11 +321,12 @@ class Hiker(object):
 
     def appendTrailHeads(self,waypoints):
         self.trailheads.extend(waypoints)
-        
+
     def appendTrailHeadsByPattern(self, regexp='.+TH'):
-        self.trailheads.extend([n for n in self.graph.nodes_iter()
+        #self.trailheads.extend([n for n in self.graph.nodes_iter()
+        self.trailheads.extend([n for n in self.graph
                                 if re.match(regexp,n)])
-                           
+
     def show(self,outfile=None):
         import matplotlib.pyplot as plt
 
@@ -343,7 +346,7 @@ class Hiker(object):
     def distanceStr(self,  waypointsStr, explain=False):
         return self.distance([n.strip() for n in waypointsStr.split(',')],
                              explain=explain)
-                     
+
 
     # h.distance(['SabinoTH','BoxCampTH']) # => 13.4
     # h.distance(['SabinoTH','BoxCampTH'], explain=True)
@@ -374,7 +377,7 @@ class Hiker(object):
         except Exception:
             pass
         return d
-        
+
     def distanceTable(self, waypoints=None):
         mat = dict() # mat[(n1,n2)] = dist
         wplist = self.graph.nodes() if (waypoints == None) else waypoints
@@ -401,28 +404,28 @@ class Hiker(object):
                     d = '%3.1f'%mat[(u,v)] if u != v else '  -  '
                     html +='<TD align="center">%s</TD>' % (d,)
                 html +='</TR>'
-            html +='</TABLE>'       
+            html +='</TABLE>'
             html += '<br />'
         return html
-            
+
     def findEnds(self, regexp='.*'):
         'Return nodes at end of paths (have only one edge)'
         return [n for n in self.graph
                 if (len(self.graph.neighbors(n)) < 2) and re.match(regexp,n)
-                ]   
+                ]
 
     def findJunctions(self, regexp='.*'):
         'Return nodes at junctions (have more than 2 edges)'
         return [n for n in self.graph
                 if (len(self.graph.neighbors(n)) > 2) and re.match(regexp,n)
-                ]   
+                ]
 
     def findTrans(self, regexp='.*'):
         '''Return nodes "in transit" (have exactly 2 edges). NB: A
         TrailHead for two trails would match this!'''
         return [n for n in self.graph
                 if (len(self.graph.neighbors(n)) == 2) and re.match(regexp,n)
-                ]   
+                ]
 
     def longestPaths(self,regexp='.+TH',explain=False):
         maxd = 0
@@ -467,7 +470,7 @@ def distance(G, *waypoints):
         total += seg
         print('seg=%.1f total=%.1f From %s to %s' % (seg,total,a,b))
     return total
-    
+
 def OLDreadKmlWaypoints(G, kmlfile):
     import xml.etree
     tree = xml.etree.ElementTree()
@@ -500,7 +503,7 @@ def trailsToGraph(trails):
             prevWP = tok
     return G
 
-    
+
 
 def tt():
     h = Hiker()
@@ -511,7 +514,7 @@ def tt():
     #!                         ,('name',str)),
     #!                   nodetype=str)
     #!pprint(G.edges(data=True))
-    
+
     #!trailFile = '/home/pothiers/src/python/catalina-edges.txt'
     #!tokens = h.readTrails(trailFile)
     #!print 'tokens=',tokens
@@ -577,13 +580,13 @@ def genTable(hiker, args, csvfile=None):
             if n1 == n2:
                 continue
             print('{},{},{}'.format(n1, n2, dist), file=csv)
-        
-    
+
+
    #! wps_str = 'MarshallGulchTH,MtKimbleJct,MudSpring,MarshallGulchTH'
    #! print(('Distances for: %s:\n%s'
    #!        %(wps_str,
    #!          h.distance(wps_str.split(','), explain=True))))
-    
+
 
 def shortest(hiker, waypoints,
              #campwps=None, # [(wp,nightNum...), ...]
@@ -619,13 +622,13 @@ def infoShortest(hiker, args):
         #pfx = args.prefix_camp if args.prefix_camp else 'Night '
         pfx = args.prefix_camp if args.prefix_camp else ''
         camp_list = [(wp,pfx+','.join(nights)) for (wp,*nights) in args.camp]
-        camps = dict(camp_list) 
+        camps = dict(camp_list)
     else:
         camps = dict()
     logging.info('infoShortest using waypoints: {}, camps: {} '
                  .format(args.waypoint, camps.keys()))
     logging.info('camps={}'.format(camps))
-    
+
     #! missing = set(waypoints) - set(hiker.graph.nodes())
     #! if 0 != len(missing):
     #!     print('The waypoints: {} are not in the data-set.'.format(missing))
@@ -648,13 +651,13 @@ def infoShortest(hiker, args):
     #!           details
     #!       ))
     shortest(hiker, args.waypoint, camps=camps, verbose=args.details)
-                
+
 def infoTrailheads(hiker, args):
     print('Trail-heads:\n  {}'.format('\n  '.join(hiker.trailheads)))
 
 def infoWaypoints(hiker, args):
     print('Waypoints:\n  {}'.format('\n  '.join(hiker.graph.nodes())))
-    
+
 ##############################################################################
 
 
@@ -681,7 +684,7 @@ def main():
                         choices = ['csv', 'path'],
                         )
     parser.add_argument('-n', '--names', help='ID to Name mapping (csv)')
-    parser.add_argument('--db', help='Insert graph in this DB')    
+    parser.add_argument('--db', help='Insert graph in this DB')
 
     pars_t = subparsers.add_parser('table',
                 help=('Output table of distances. '
@@ -714,7 +717,7 @@ def main():
                         action='append',
                         help=('(waypoint night-number) of camp. Reset '
                               'distance. (multi allowed)'))
-    pars_s.add_argument('--details', 
+    pars_s.add_argument('--details',
                         action='store_true',
                         help='List cummulative distance)')
     pars_s.add_argument('--prefix_camp',
@@ -732,7 +735,7 @@ def main():
     ########################################
     log_level = getattr(logging, args.loglevel.upper(), None)
     if not isinstance(log_level, int):
-        parser.error('Invalid log level: %s' % args.loglevel) 
+        parser.error('Invalid log level: %s' % args.loglevel)
     logging.basicConfig(level = log_level,
                         format='%(levelname)s %(message)s',
                         datefmt='%m-%d %H:%M'
@@ -746,16 +749,14 @@ def main():
     hiker.loadData(args.infile, args.format, names=args.names)
     if args.db:
         save_graph(hiker.graph, args.db)
-        
+
     hiker.appendTrailHeadsByPattern()
 
     args.func(hiker, args)
-    
+
     #!elif args.cmd == 'trailheads':
     #!    print('Trailheads: {}'.format(', '.join(h.trailheads)))
-    
+
 
 if __name__ == '__main__':
     main()
-
-    

@@ -1,30 +1,41 @@
-from setuptools import setup, find_packages  # Always prefer setuptools over distutils
+# see https://packaging.python.org/tutorials/packaging-projects/#configuring-metadata
+# python3 -m build --wheel; twine upload dist/*
+
+import setuptools
 from codecs import open  # To use a consistent encoding
 from os import path
+import sys
+sys.path.append(".")
+from hikecalc import __version__
 
 here = path.abspath(path.dirname(__file__))
+
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
 
 # Get the long description from the relevant file
 with open(path.join(here, 'DESCRIPTION.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
-setup(
-    name='hikecalc',
+with open("requirements.txt") as f:
+    install_require = f.read().splitlines()
 
-    # Versions should comply with PEP440.  For a discussion on single-sourcing
-    # the version across setup.py and the project code, see
-    # http://packaging.python.org/en/latest/tutorial.html#version
-    version='1.0.0a1',
+setuptools.setup(
+    name='hikecalc',
+    version=__version__, # see hikecalc/__init__.py
+
+    author='The Python Packaging Authority',   # @@@
+    author_email='pypa-dev@googlegroups.com',  # @@@
 
     description='Calculate hikes given various constraints.',
     long_description=long_description,
+    long_description_content_type="text/markdown",
 
-    # The project's main homepage.
     url='https://github.com/pothiers/hikecalc',
 
-    # Author details
-    author='The Python Packaging Authority',
-    author_email='pypa-dev@googlegroups.com',
+    project_urls={
+        "Documentation":"https://hikecalc.readthedocs.io/en/latest/",
+        },
 
     # Choose your license
     license='MIT',
@@ -43,15 +54,9 @@ setup(
         # Pick your license as you wish (should match "license" above)
         'License :: OSI Approved :: MIT License',
 
-        # Specify the Python versions you support here. In particular, ensure
-        # that you indicate whether you support Python 2, Python 3 or both.
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.2',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
     ],
 
     # What does your project relate to?
@@ -59,13 +64,14 @@ setup(
 
     # You can just specify the packages manually here if your project is
     # simple. Or you can use find_packages().
-    packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
+    packages=setuptools.find_packages(exclude=['contrib', 'docs', 'tests*']),
 
     # List run-time dependencies here.  These will be installed by pip when your
     # project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/technical.html#install-requires-vs-requirements-files
     install_requires=[''],
+    python_requires=">=3.6",
 
     # List additional groups of dependencies here (e.g. development dependencies).
     # You can install these using the following syntax, for example:
