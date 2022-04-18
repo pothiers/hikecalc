@@ -36,6 +36,7 @@ import re
 import csv
 import sqlite3
 import yaml
+import os.path
 #!import datetime
 
 #!import collections
@@ -294,9 +295,9 @@ class Hiker(object):
         if info:
             print('Graph info: \n{}'.format(nx.info(self.graph)))
 
-    def loadData(self, data_file, format,
+    def loadData(self, data_file, fname, format,
                  names=None, eraseOld=True, info=False):
-        fname = data_file.name
+        #fname = data_file.name
         self.pathfile = fname
 
         if eraseOld:
@@ -676,8 +677,9 @@ def main():
                                    'INFO', 'DEBUG'],
                         default='WARNING',
                         )
-    parser.add_argument('infile',  help='Input file',
-                        type=argparse.FileType('r') )
+    parser.add_argument('infile',
+                        #type=argparse.FileType('r'),
+                        help='Distance data filename'  )
     parser.add_argument('-f',  '--format',
                         help='Input file format',
                         default='path',
@@ -746,7 +748,8 @@ def main():
 
     hiker = Hiker()
     #!hiker.loadPaths(args.infile)
-    hiker.loadData(args.infile, args.format, names=args.names)
+    datafile = open(os.path.expanduser(args.infile), 'r')
+    hiker.loadData(datafile, args.infile, args.format, names=args.names)
     if args.db:
         save_graph(hiker.graph, args.db)
 
