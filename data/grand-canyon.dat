@@ -1,20 +1,42 @@
 # "trail" or "path" format
+# See data in: https://www.nps.gov/grca/planyourvisit/upload/tonto_distances.pdf
 
 South_Kaibab_TH 1.5 Cedar_Ridge 1.5 Skeleton_Point 1.4 Tipoff
 2.6 Bright_Angel_CG
 
-Tipoff 4.4 Indian_Garden_CIG
+Tipoff 4.4 Indian_Garden_CG
 
 Bright_Angel_TH 1.6 Mile_and_a_half_Resthouse 1.5 Three_Mile_Resthouse
-1.7 Indian_Garden_CIG
-3.2 River_Resthouse 1.5 Bright_Angle_CG
+1.7 Indian_Garden_CG
+3.2 River_Resthouse 1.5 Bright_Angel_CG
 
-Indian_Garden_CIG .7 Plateau_Point_JCT 1.8 Horn_Creek_BL4 4.8 Salt_Creek_BL5
+Indian_Garden_CG .7 Plateau_Point_JCT 1.8 Horn_Creek_BL4 4.8 Salt_Creek_BL5
 2.1 Cedar_Spring_BL6
 1.3 Monument_Creek_BL7 3.5 Hermit_Creek_BM7
 Monument_Creek_BL7 2.3 Tonto_JCT 7.0 Hermit_TH
 Tonto_JCT 1.2 Hermit_Creek_BM7 1.5 Hermit_Rapids_BM8
-Hermit_TH 2.2 Santa_Maria_Spring 
+Hermit_TH 2.2 Santa_Maria_Spring
 Monument_Creek_BL7 1.6 Granite_Rapids_BL8
 
 Plateau_Point_JCT .8 Plateau_Point
+
+
+Little_Colorado
+9.1  Tanner_Beach
+7.8  Tanner_TH
+10.8 Cardenas_Creek
+7.0  Nevills_Rapids
+2.0  Hance_Rapids
+6.5  New_Hance_TH
+13.0 Hance_Creek
+1.9  Horseshoe_Mesa
+3.0  Grandview_TH
+4.5  Cottonwood_Creek
+5.5  Grapevine_Creek
+8.7  Lonetree_Canyon
+3.5  Cremation
+6.5  South_Kaibab_TH
+
+Cremation 4.7  Bright_Angel_CG
+Cremation 11.4  Bright_Angel_TH
+Cremation 6.6  Indian_Garden_CG

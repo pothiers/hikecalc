@@ -8,6 +8,8 @@ be configured appropriately.
 
 Customize org-bable-load-languages to include: dot, sh
 
+: emacs --batch --eval "(require 'org)" ~/sandbox/hikecalc/docs/hikecalc.org --funcall org-latex-export-to-pdf
+
 * Overview
 
 The *hikecalc* is intended to help you find and plan hikes suitable for your
@@ -17,9 +19,10 @@ provide constraints, it does the figuring.
 
 The data file for *hikecalc* is a simply formatted text file. You can
 write your own or use data files that come with the
-package. Generally, one data file reflects distances between points in
-a fairly local region.  For instance, one of the supplied data files
-is for the Catalina Mountain range that is North of Tucson, Arizona.
+package. Generally, one data file rikeflects distances between points in
+a fairly local region. The points usually represent Trail Heads or
+Junctions.  For instance, one of the supplied data files is for the
+Catalina Mountain range that is North of Tucson, Arizona.
 
 * Reports; what hikecalc can tell you
 Every time you invoke hikecalc, it outputs something.  We call the
@@ -29,8 +32,10 @@ outputs "reports" even though they are sometimes very simple lists.
 # and "annotation" column (camp night, "Start", "Done")
 
 * Example Use Cases
+# # source  venv/bin/activate
+# # .  venv/bin/activate
 #+BEGIN_SRC sh :session hcenv :dir ~/sandbox/hikecalc :exports none :results output
-source  hc_env/bin/activate
+. venv/bin/activate
 export CATDATA=~/sandbox/hikecalc/data/catalina.dat
 PROJ=`pwd`
 #+END_SRC
@@ -61,7 +66,7 @@ hc shortest -w SabinoTH -w TheWindow  $CATDATA
 
 ** What is the detail distance from Butterfly to Palisades Ranger Station?
 #+BEGIN_SRC sh :session hcenv  :results output :exports both
-hc shortest -w ButterflyTH  -w PalisadesRangerTH --details $CATDATA 
+hc shortest -w ButterflyTH  -w PalisadesRangerTH --details $CATDATA
 #+END_SRC
 
 ** Figure out multi-day hike with given end-points
@@ -71,7 +76,7 @@ loop. We will take 4 days (3 nights).
 
 First we list the trail-heads so we know the precise names of our
 start and end points as given in the data file.
-: hc th data/catalina.dat 
+: hc th data/catalina.dat
 
 Then we calculate the basic route:
 
@@ -86,13 +91,13 @@ up the mountain and we don't like getting up real early.
 
 Looking at our detail route, we pick the waypoints of the places we
 want to camp near.  We choose LemmonPoolJct, WestFortTE,
-BridalVeilFalls. 
+BridalVeilFalls.
 #+BEGIN_SRC sh :session hcenv  :results output :exports both
 hc shortest --details -w MarshallGulchTH  -w SabinoTH -c LemmonPoolJct 1   -c WestForkTE 2 -c BridalVeilFalls 3 $CATDATA
 #+END_SRC
 
 This lists 3 columns of distances:
-1. segment 
+1. segment
 2. running total for day
 3. running total for trip
 
@@ -103,11 +108,11 @@ we'll be on the road for a little and besides, we'll be sleeping in
 our own bed that night!
 
 * Example: Use HC + org-mode to generate planning document with hike options
-This example was from an actually planning activity. 
+This example was from an actually planning activity.
 
 The use of HC for this activity was imbedded in a text document that
 was edited using Emacs and [[http://orgmode.org/][org-mode]].  If that means nothing to you,
-that's ok.  The example should still be informative. 
+that's ok.  The example should still be informative.
 
 *** For Emacs Users
 If you use Emacs, you should take a look at [[http://orgmode.org/][org-mode]] and at this
@@ -126,7 +131,7 @@ publish/export your document and include the HC reports for you.
 :END:
 
 #+BEGIN_SRC sh :session hcenv :exports none :results output
-source ~/sandbox/hikecalc/hc_env/bin/activate
+. ~/sandbox/hikecalc/venv/bin/activate
 export DATA=~/sandbox/hikecalc/data/grand-canyon.dat
 #+END_SRC
 #+RESULTS:
@@ -164,23 +169,23 @@ hc shortest --details -w South_Kaibab_TH -w  Plateau_Point \
 
 : The shortest distance from "South_Kaibab_TH" to "Hermit_TH" is 39.0 miles via:
 :     0.0   0.0  South_Kaibab_TH	Start
-:     1.5   1.5  Cedar_Ridge	
-:     1.5   3.0  Skeleton_Point	
-:     1.4   4.4  Tipoff	
+:     1.5   1.5  Cedar_Ridge
+:     1.5   3.0  Skeleton_Point
+:     1.4   4.4  Tipoff
 :     4.4   8.8  Indian_Garden_CIG	Camp 1
-:     0.7   0.7  Plateau_Point_JCT	
-:     0.8   1.5  Plateau_Point	
-:     0.8   2.3  Plateau_Point_JCT	
+:     0.7   0.7  Plateau_Point_JCT
+:     0.8   1.5  Plateau_Point
+:     0.8   2.3  Plateau_Point_JCT
 :     1.8   4.1  Horn_Creek	Camp 2
-:     4.8   4.8  Salt_Creek	
-:     2.1   6.9  Cedar_Spring	
-:     1.3   8.2  Monument_Creek	
+:     4.8   4.8  Salt_Creek
+:     2.1   6.9  Cedar_Spring
+:     1.3   8.2  Monument_Creek
 :     1.6   9.8  Granite_Rapids	Camp 3
-:     1.6   1.6  Monument_Creek	
+:     1.6   1.6  Monument_Creek
 :     3.5   5.1  Hermit_Creek_BM7	Camp 4
-:     1.5   1.5  Hermit_Rapids_BM8	
+:     1.5   1.5  Hermit_Rapids_BM8
 :     1.5   3.0  Hermit_Creek_BM7	Camp 4
-:     1.2   1.2  Tonto_JCT	
+:     1.2   1.2  Tonto_JCT
 :     7.0   8.2  Hermit_TH	DONE
 
 ** "A Quicky" (2 nights)
@@ -232,7 +237,7 @@ hc shortest --details -w South_Kaibab_TH -w  Plateau_Point -w Indian_Garden_CIG 
 For each path, you can get a simple summary of the total, or you can
 get a segment by segment running total of the milage.
 
-- [ ] OB (Out and Back) - "Round Trip".  
+- [ ] OB (Out and Back) - "Round Trip".
   + You provide TH and turn around point
   + Returns the shortest route out and back to your turn-around point
     (turn-around point must be a waypoint in the data file)
@@ -242,7 +247,7 @@ get a segment by segment running total of the milage.
     each.
 - [ ] Through hike with shuttle
   + You provide start and end TH.
-  + Report 
+  + Report
 * COMMENT POSTSCRIPT
 #+TITLE: hikecalc
 #+DATE: <2015-03-08 Sun>

@@ -8,6 +8,8 @@ TODO:
 
 
 EXAMPLE:
+hikecalc/hike_calc.py shortest -w SabinoTH -w TheWindow ~/sandbox/hikecalc/data/catalina.dat
+
 sqlite3  grand-canyon.db < hikecalc/graph_schema.sql
 hc --format csv -n data/tonto-west.lut.csv --db grand-canyon.db shortest -w Indian_Garden -w Granite_Rapids -w Hermit_Rest_via_Hermit_Trail data/tonto-west.csv
 
@@ -664,8 +666,8 @@ def infoWaypoints(hiker, args):
 
 def main():
     #!print('EXECUTING: {}\n\n'.format(' '.join(sys.argv)))
-    #!description='My shiny new python program',
-    #!epilog='EXAMPLE: %(prog)s a b"'
+    description='My shiny new python program',
+    epilog='EXAMPLE: %(prog)s --help"'
 
     parser = argparse.ArgumentParser('hc')
     subparsers = parser.add_subparsers(title='subcommands',
