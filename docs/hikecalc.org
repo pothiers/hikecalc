@@ -32,8 +32,9 @@ outputs "reports" even though they are sometimes very simple lists.
 # and "annotation" column (camp night, "Start", "Done")
 
 * Example Use Cases
-# # source  venv/bin/activate
-# # .  venv/bin/activate
+# cd ~/sandbox/hikecalc
+# .  venv/bin/activate
+# export CATDATA=~/sandbox/hikecalc/data/catalina.dat
 #+BEGIN_SRC sh :session hcenv :dir ~/sandbox/hikecalc :exports none :results output
 . venv/bin/activate
 export CATDATA=~/sandbox/hikecalc/data/catalina.dat

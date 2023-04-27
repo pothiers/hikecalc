@@ -55,7 +55,7 @@ def save_graph(G, dbfile):
     con = sqlite3.connect(dbfile)
     cur = con.cursor()
     nodes = [(n, d.get('shortname','NULL'), d.get('longname','NULL'))
-             for n,d in G.nodes_iter(data=True)]
+             for n,d in G.nodes(data=True)]
     cur.executemany('insert into node values (?,?,?)',nodes)
     edges = [(u, v, d['dist'])
              for u,v,d in G.edges_iter(data=True)]
@@ -573,17 +573,16 @@ def genTable(hiker, args, csvfile=None):
     #!h.appendTrailHeadsByPattern()
 
     mat = hiker.distanceTable()
+    print(f'DBG mat={mat}')
     #! print('Distance table: {}'.format(mat))
     if csvfile == None:
-        for ((n1, n2),dist) in mat.items():
-            print('{}, \t{}, \t{}'.format(n1, n2, dist))
-        return None
+        csvfile = 'hc-distances.csv'
     with open(csvfile, 'w') as csv:
         for ((n1, n2),dist) in mat.items():
             if n1 == n2:
                 continue
-            print('{},{},{}'.format(n1, n2, dist), file=csv)
-
+            print(f'{n1},{n2}, {dist}', file=csv)
+    print(f'Wrote: {csvfile}')
 
    #! wps_str = 'MarshallGulchTH,MtKimbleJct,MudSpring,MarshallGulchTH'
    #! print(('Distances for: %s:\n%s'
@@ -710,6 +709,9 @@ def main():
     pars_w = subparsers.add_parser('wp',
                                    help='Output all waypoints')
     pars_w.set_defaults(func=infoWaypoints)
+
+    #! pars_g = subparsers.add_parser('graph',
+    #!                                help='Output all DB graph to hc.dot')
 
     pars_s = subparsers.add_parser('shortest',
                                    help='Find shortest route')
