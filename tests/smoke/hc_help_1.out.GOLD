@@ -1,0 +1,25 @@
+usage: hc [-h] [--loglevel {CRTICAL,ERROR,WARNING,INFO,DEBUG}] [-f {csv,path}] [-n NAMES]
+          [--db DB]
+          {table,th,wp,shortest} ... infile
+
+positional arguments:
+  infile                Distance data filename
+
+options:
+  -h, --help            show this help message and exit
+  --loglevel {CRTICAL,ERROR,WARNING,INFO,DEBUG}
+                        Kind of diagnostic output
+  -f {csv,path}, --format {csv,path}
+                        Input file format
+  -n NAMES, --names NAMES
+                        ID to Name mapping (csv)
+  --db DB               Insert graph in this DB
+
+subcommands:
+  {table,th,wp,shortest}
+                        sub-command help
+    table               Output table of distances. Distance between every pair of waypoints that
+                        are connected by a path of 1 or more segments.
+    th                  Output all trail-heads
+    wp                  Output all waypoints
+    shortest            Find shortest route

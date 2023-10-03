@@ -1,0 +1,19 @@
+The shortest distance from "MarshallGulchTH" to "SabinoTH" is 18.7 miles via:
+    0.0   0.0   0.0 MarshallGulchTH            Start
+    1.2   1.2   1.2 MarshallSaddle             
+    1.7   2.9   2.9 LemmonLookoutBot           
+    0.8   3.7   3.7 LemmonPoolJct              1
+    0.0   0.0   3.7 ---------                  ----------
+    1.5   1.5   5.2 LemmonTrail@WildernessOfRocks  
+    1.9   3.4   7.1 RomeroPass                 
+    1.8   5.2   8.9 WestForkTE                 2
+    0.0   0.0   8.9 ---------                  ----------
+    1.9   1.9  10.8 Cathedral_route            
+    1.1   3.0  11.9 CathedralJct               
+    0.9   3.9  12.8 BridalVeilFalls            3
+    0.0   0.0  12.8 ---------                  ----------
+    1.3   1.3  14.1 GeronimoMeadow             
+    1.2   2.5  15.3 CardiacGap                 
+    2.4   4.9  17.7 RattlesnakeJct             
+    0.5   5.4  18.2 SabinoRoad1                
+    0.5   5.9  18.7 SabinoTH                   Done

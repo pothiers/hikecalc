@@ -1,0 +1,14 @@
+usage: hc shortest [-h] [-w WAYPOINT] [-c CAMP CAMP] [--details] [--prefix_camp PREFIX_CAMP]
+                   [--first_day FIRST_DAY]
+
+options:
+  -h, --help            show this help message and exit
+  -w WAYPOINT, --waypoint WAYPOINT
+                        Waypoint to include. (multi allowed)
+  -c CAMP CAMP, --camp CAMP CAMP
+                        (waypoint night-number) of camp. Reset distance. (multi allowed)
+  --details             List cummulative distance)
+  --prefix_camp PREFIX_CAMP
+                        Prefix camp number with this string when outputting details.
+  --first_day FIRST_DAY
+                        Date (mm/dd/yyyy) of first day of hiking
