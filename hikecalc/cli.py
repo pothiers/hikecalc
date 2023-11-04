@@ -75,7 +75,7 @@ class HikecalcCli(cmd.Cmd):
             print(parser('-h'))
         except SystemExit:
             pass
-    
+
     ###########################################################################
     ### ----- HikeCalc commands --------
     def help_load(self):
@@ -83,7 +83,7 @@ class HikecalcCli(cmd.Cmd):
     def do_load(self, arg):
         """\
 Load datafile.
-SYNTAX: load [options] filename 
+SYNTAX: load [options] filename
 OPTIONS:
  format::
 EXAMPLE:
@@ -125,7 +125,7 @@ EXAMPLE:
     load ~/hikecalc/data/catalina.dat
     shortest SabinoTH HutchsPool
 """
-        
+
         #waypoints,camps = self.parse_waypoints(arg)
         #hc.shortest(self.hiker, waypoints, camps=camps, verbose=True)
         args = self.parse_shortest(arg)
@@ -154,7 +154,7 @@ def start_workflow():
     """The work-horse function."""
     HikecalcCli().cmdloop()
 
-    
+
 ##############################################################################
 
 def main():
@@ -184,5 +184,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-    

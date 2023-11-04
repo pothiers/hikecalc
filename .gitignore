@@ -5,6 +5,10 @@ tests/smoke/*.clean
 tests/smoke/*.diff
 tests/smoke/dist.out
 tests/smoke/catalina-dist.csv
+hc_*.out
+hc.err
+hc.out
+README-smoke-results.txt
 
 
 env_hikecalc/

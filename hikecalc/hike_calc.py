@@ -627,9 +627,9 @@ def infoShortest(hiker, args):
         camps = dict(camp_list)
     else:
         camps = dict()
-    logging.info('infoShortest using waypoints: {}, camps: {} '
-                 .format(args.waypoint, camps.keys()))
-    logging.info('camps={}'.format(camps))
+    logging.info(f'infoShortest using waypoints: {args.waypoint}, '
+                 f'camps: {camps} '
+                 )
 
     #! missing = set(waypoints) - set(hiker.graph.nodes())
     #! if 0 != len(missing):
@@ -678,7 +678,7 @@ def main():
                                    'INFO', 'DEBUG'],
                         default='WARNING',
                         )
-    parser.add_argument('infile',
+    parser.add_argument('distdata',
                         #type=argparse.FileType('r'),
                         help='Distance data filename'  )
     parser.add_argument('-f',  '--format',
@@ -689,23 +689,24 @@ def main():
     parser.add_argument('-n', '--names', help='ID to Name mapping (csv)')
     parser.add_argument('--db', help='Insert graph in this DB')
 
-    pars_t = subparsers.add_parser('table',
-                help=('Output table of distances. '
-                      'Distance between every pair of waypoints that are '
-                      'connected by a path of 1 or more segments.'
-                  ))
-    pars_t.add_argument('-f', '--format',
-                        choices = ['csv', 'txt'],
-                        default='csv',
-                        help='Output format',
-                        )
-    pars_t.set_defaults(func=genTable)
+    #! pars_t = subparsers.add_parser('table',
+    #!             help=('Output table of distances. '
+    #!                   'Distance between every pair of waypoints that are '
+    #!                   'connected by a path of 1 or more segments.'
+    #!               ))
+    #! pars_t.add_argument('-f', '--format',
+    #!                     choices = ['csv', 'txt'],
+    #!                     default='csv',
+    #!                     help='Output format',
+    #!                     )
+    #! pars_t.set_defaults(func=genTable)
 
 
     pars_h = subparsers.add_parser('th',
                                    help='Output all trail-heads')
     pars_h.set_defaults(func=infoTrailheads)
 
+    # create the parser for the "wp" (WayPoint) command
     pars_w = subparsers.add_parser('wp',
                                    help='Output all waypoints')
     pars_w.set_defaults(func=infoWaypoints)
@@ -713,6 +714,7 @@ def main():
     #! pars_g = subparsers.add_parser('graph',
     #!                                help='Output all DB graph to hc.dot')
 
+    # create the parser for the "shortest" command
     pars_s = subparsers.add_parser('shortest',
                                    help='Find shortest route')
     pars_s.add_argument('-w', '--waypoint',
@@ -725,7 +727,12 @@ def main():
                               'distance. (multi allowed)'))
     pars_s.add_argument('--details',
                         action='store_true',
-                        help='List cummulative distance)')
+                        help='List cummulative distance')
+    pars_s.add_argument('--csv',
+                        action='store_true',
+                        help=('Ouput details as CSV '
+                              '(Comma Seperated Values for import into spreadsheets)'
+                              ))
     pars_s.add_argument('--prefix_camp',
                         default='',
                         help=('Prefix camp number with this string when '
@@ -751,9 +758,9 @@ def main():
     ########################################
 
     hiker = Hiker()
-    #!hiker.loadPaths(args.infile)
-    datafile = open(os.path.expanduser(args.infile), 'r')
-    hiker.loadData(datafile, args.infile, args.format, names=args.names)
+    #!hiker.loadPaths(args.distdata)
+    datafile = open(os.path.expanduser(args.distdata), 'r')
+    hiker.loadData(datafile, args.distdata, args.format, names=args.names)
     if args.db:
         save_graph(hiker.graph, args.db)
 

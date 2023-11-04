@@ -51,7 +51,6 @@ hc shortest --help
 #+END_SRC
 
 ** What trailheads are in the file?
-
 #+BEGIN_SRC sh :session hcenv  :results output :exports both
 hc th $CATDATA
 #+END_SRC
@@ -62,7 +61,7 @@ hc wp $CATDATA
 #+END_SRC
 ** How far is it from Sabino visitor center to The Window?
 #+BEGIN_SRC sh :session hcenv  :results output :exports both
-hc shortest -w SabinoTH -w TheWindow  $CATDATA
+hc shortest -w SabinoTH -w TheWindow $CATDATA
 #+END_SRC
 
 ** What is the detail distance from Butterfly to Palisades Ranger Station?
@@ -91,10 +90,10 @@ expect to start a little later on the first day since we have to get
 up the mountain and we don't like getting up real early.
 
 Looking at our detail route, we pick the waypoints of the places we
-want to camp near.  We choose LemmonPoolJct, WestFortTE,
+want to camp near.  We choose LemmonPoolJct, WestForkTE,
 BridalVeilFalls.
 #+BEGIN_SRC sh :session hcenv  :results output :exports both
-hc shortest --details -w MarshallGulchTH  -w SabinoTH -c LemmonPoolJct 1   -c WestForkTE 2 -c BridalVeilFalls 3 $CATDATA
+hc shortest --details -w MarshallGulchTH  -w SabinoTH -c LemmonPoolJct 1 -c WestForkTE 2 -c BridalVeilFalls 3 $CATDATA
 #+END_SRC
 
 This lists 3 columns of distances:
@@ -106,7 +105,7 @@ We see that day 1 and day 3 are lower milage days. This feels right
 since we'll start later on day 1 and day 3 goes up and over Cathedral
 Saddle so will be harder.  The last day is the the highest milage but
 we'll be on the road for a little and besides, we'll be sleeping in
-our own bed that night!
+our own beds that night!
 
 * Example: Use HC + org-mode to generate planning document with hike options
 This example was from an actually planning activity.
