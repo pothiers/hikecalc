@@ -20,4 +20,4 @@
 
 # must mach: [N!]N(.N)*[{a|b|rc}N][.postN][.devN]
 # Example of a correct version string: '0.4.0a3.dev35'
-__version__ = '0.6.0a1.dev2'
+__version__ = '0.6.0a1.dev3'

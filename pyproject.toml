@@ -5,7 +5,7 @@
 # Updating PyPi:
 #   source venv/bin/activate
 #   flit build
-#   flit publish
+#   flit publish --repository hikecalc
 
 [build-system]
 requires = ["flit_core >=3.2,<4"]
@@ -24,6 +24,10 @@ dynamic = ["version", "description"]
 "Homepage" = "https://pypi.org/project/hikecalc/"
 "Bug Tracker" = "https://github.com/pypa/hikecalc/issues"
 "Documentation" ="https://hikecalc.readthedocs.io/en/latest/"
+
+[project.scripts]
+hc = 'hikecalc.hike_calc:main'
+hikecalc = 'hikecalc.cli:main'
 
 [tool.black]
 # https://black.readthedocs.io/en/stable/usage_and_configuration/index.html
