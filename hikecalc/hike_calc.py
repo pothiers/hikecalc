@@ -678,9 +678,11 @@ def main():
                                    'INFO', 'DEBUG'],
                         default='WARNING',
                         )
-    parser.add_argument('distdata',
+    parser.add_argument('--distdata',
                         #type=argparse.FileType('r'),
-                        help='Distance data filename'  )
+                        help=f'Distance data filename. Dft=$HCDATA',
+                        default=os.environ.get('HCDATA'),
+                        )
     parser.add_argument('-f',  '--format',
                         help='Input file format',
                         default='path',
